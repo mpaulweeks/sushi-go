@@ -1,10 +1,17 @@
 
+var PLAYER_HAND_SIZE = {
+    2: 10,
+    3: 9,
+    4: 8,
+    5: 7
+};
+
 function runRound(players){
     var deck = getDeck();
     var packs = [];
     players.forEach(function (player){
         player.newHand();
-        packs.push(deck.draw(8));
+        packs.push(deck.draw(PLAYER_HAND_SIZE[players.length]));
     });
 
     // print packs

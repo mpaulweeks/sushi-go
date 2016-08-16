@@ -59,6 +59,40 @@ function myPreferences(tally, pack, hands){
     return pref;
 }
 
+function simplePreferences(tally, pack, hands){
+    var pref = [];
+    pref.push(WASABI);
+    pref.push(SASHIMI);
+    pref.push(NIGIRI_SQUID);
+    pref.push(TEMPURA);
+    pref.push(DUMPLING);
+    pref.push(NIGIRI_SALMON);
+    pref.push(MAKI_3);
+    pref.push(MAKI_2);
+    pref.push(MAKI_1);
+    pref.push(NIGIRI_EGG);
+    pref.push(PUDDING);
+    pref.push(CHOPSTICKS);
+    return pref;
+}
+
+function makiPreferences(tally, pack, hands){
+    var pref = [];
+    pref.push(WASABI);
+    pref.push(SASHIMI);
+    pref.push(NIGIRI_SQUID);
+    pref.push(MAKI_3);
+    pref.push(TEMPURA);
+    pref.push(DUMPLING);
+    pref.push(MAKI_2);
+    pref.push(NIGIRI_SALMON);
+    pref.push(MAKI_1);
+    pref.push(NIGIRI_EGG);
+    pref.push(PUDDING);
+    pref.push(CHOPSTICKS);
+    return pref;
+}
+
 function randomPreferences(tally, pack, hands){
     var pref = [];
     pref.push(WASABI);
