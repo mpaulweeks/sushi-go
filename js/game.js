@@ -1,5 +1,5 @@
 
-function runGame(players){
+function runRound(players){
     var deck = getDeck();
     var packs = [];
     players.forEach(function (player){
@@ -32,9 +32,20 @@ function runGame(players){
     for (var i = 0; i < players.length; i++){
         var player = players[i];
         var others = exceptIndex(players, i);
-        var score = player.score(others);
-        println(player.hand.toString());
-        println(score);
-        println(player.hand.tally);
+        player.endRound(others);
+        // println(player.hand.toString());
+        // println(player.hand.tally);
+    }
+}
+
+function runGame(players){
+    for (var i = 0; i < 3; i++){
+        runRound(players);
+    }
+    for (var i = 0; i < players.length; i++){
+        var player = players[i];
+        var others = exceptIndex(players, i);
+        player.endGame(others);
+        println(player.getScore());
     }
 }

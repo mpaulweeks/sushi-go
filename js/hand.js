@@ -23,7 +23,7 @@ function genHand(cards, tally){
         return genHand(self.cards, self.tally);
     };
 
-    self.score = function(otherHands){
+    self.calculateScore = function(otherHands){
         var sum = 0;
         sum += 10 * parseInt(self.tally[SASHIMI.id] / 3);
         sum += 5 * parseInt(self.tally[TEMPURA.id] / 2);
@@ -64,8 +64,6 @@ function genHand(cards, tally){
             makiMultiplier = 0;
         }
         sum += parseInt(makiMultiplier / tiedMakis);
-
-        // todo pudding
 
         return sum;
     };
