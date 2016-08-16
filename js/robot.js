@@ -36,7 +36,7 @@ function myPreferences(tally, pack, hands){
         pref.push(SASHIMI);
     }
     if (tally[TEMPURA.id] % 2 == 0 && remainingPicks >= 4){
-        pref.push(SASHIMI);
+        pref.push(TEMPURA);
     }
     if (tally.pendingWasabi > 0){
         pref.push(NIGIRI_EGG);
