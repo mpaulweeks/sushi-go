@@ -1,12 +1,13 @@
 
-function game(players){
+function runGame(players){
     var deck = getDeck();
-    var hands = [];
     var packs = [];
-    for (var i = 0; i < 4; i++){
-        hands.push(genHand());
+    players.forEach(function (player){
+        player.newHand();
         packs.push(deck.draw(8));
-    }
+    });
+
+    // print packs
     packs.forEach(function (p){
         var ids = [];
         p.forEach(function (card){
@@ -14,25 +15,26 @@ function game(players){
         });
         println("pack: " + ids.join(", "));
     });
+    println("---")
+
     while (packs[0].length > 0){
         var updatedPacks = [];
-        for (var i = 0; i < hands.length; i++){
-            var hand = hands[i];
+        for (var i = 0; i < players.length; i++){
+            var player = players[i];
+            var others = exceptIndex(players, i);
             var packIndex = (i + 1) % packs.length;
             var pack = packs[packIndex];
-            var preferences = myPreferences(hand.tally, pack, []);
-            var updatedPack = hand.applyPreferences(pack, preferences);
+            var updatedPack = player.draft(pack, others);
             updatedPacks.push(updatedPack);
         }
         packs = updatedPacks;
     }
-    println("---")
-    for (var i = 0; i < hands.length; i++){
-        var hand = hands[i];
-        var others = exceptIndex(hands, i);
-        var score = hand.score(others);
-        println(hand.toString());
+    for (var i = 0; i < players.length; i++){
+        var player = players[i];
+        var others = exceptIndex(players, i);
+        var score = player.score(others);
+        println(player.hand.toString());
         println(score);
-        println(hand.tally);
+        println(player.hand.tally);
     }
 }

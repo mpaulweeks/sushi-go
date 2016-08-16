@@ -23,7 +23,7 @@ function genHand(cards, tally){
         return genHand(self.cards, self.tally);
     };
 
-    self.score = function(hands){
+    self.score = function(otherHands){
         var sum = 0;
         sum += 10 * parseInt(self.tally[SASHIMI.id] / 3);
         sum += 5 * parseInt(self.tally[TEMPURA.id] / 2);
@@ -51,7 +51,7 @@ function genHand(cards, tally){
         sum += 1 * nigiriTally[NIGIRI_EGG.id];
         var greaterMakis = new Set();
         var tiedMakis = 1;
-        hands.forEach(function (otherHand){
+        otherHands.forEach(function (otherHand){
             var otherMaki = otherHand.tally.makiTotal;
             if (otherMaki > self.tally.makiTotal){
                 greaterMakis.add(otherMaki);

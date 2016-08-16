@@ -11,8 +11,9 @@ function simHand(){
 }
 
 function runSim(){
-    // for (var i = 0; i < 10; i++){
-    //     simHand();
-    // }
-    game();
+    var players = [];
+    for (var i = 0; i < 4; i++){
+        players.push(genPlayer(myPreferences));
+    }
+    runGame(players);
 }
