@@ -25,7 +25,7 @@ function genHand(cards, tally){
 
     self.score = function(hands){
         var sum = 0;
-        sum += 10 * parseInt(self.tally[WASABI.id] / 3);
+        sum += 10 * parseInt(self.tally[SASHIMI.id] / 3);
         sum += 5 * parseInt(self.tally[TEMPURA.id] / 2);
         var dumplingCount = self.tally[DUMPLING.id];
         while (dumplingCount > 0){
@@ -81,7 +81,7 @@ function genHand(cards, tally){
             self.tally.wasabiTargets.push(card);
         }
         if (card.isMaki){
-            self.makiTotal += card.makiScore;
+            self.tally.makiTotal += card.makiScore;
         }
     };
 
