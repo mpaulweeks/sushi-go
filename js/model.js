@@ -29,14 +29,6 @@ var SASHIMI = function(){
     self.id = "sashimi";
     self.color = "green";
     self.symbol = "S";
-    self.value = function(hand, pickNum){
-        var rest = getRest(hand, pickNum);
-        var count = getCount(rest, checkIdFunc(self.id));
-        if (count >= 3 && count % 3 == 0){
-            return 10;
-        }
-        return 0;
-    }
     return self;
 }();
 
@@ -46,33 +38,16 @@ var TEMPURA = function(){
     self.id = "tempura";
     self.color = "purple";
     self.symbol = "T";
-    self.value = function(hand, pickNum){
-        var rest = getRest(hand, pickNum);
-        var count = getCount(rest, checkIdFunc(self.id));
-        if (count >= 2 && count % 2 == 0){
-            return 5;
-        }
-        return 0;
-    }
     return self;
 }();
 
 var DUMPLING = function(){
     var self = {};
     self.SCORES = [1, 3, 6, 10, 15];
-    // self.SCORES = [0, 1, 2, 3, 4, 5];
     self.quantity = 14;
     self.id = "dumpling";
     self.color = "blue";
     self.symbol = "D";
-    self.value = function(hand, pickNum){
-        var rest = getRest(hand, pickNum);
-        var count = getCount(rest, checkIdFunc(self.id));
-        while (count > 5){
-            count = count - 5;
-        }
-        return SCORES[count];
-    }
     return self;
 }();
 
@@ -82,9 +57,6 @@ var PUDDING = function(){
     self.id = "pudding";
     self.color = "pink";
     self.symbol = "P";
-    self.value = function(hand, pickNum){
-        return 0;
-    }
     return self;
 }();
 
@@ -95,9 +67,6 @@ var NIGIRI_SQUID = function(){
     self.color = "yellow";
     self.symbol = "3";
     self.isNigiri = true;
-    self.value = function(hand, pickNum){
-        return 3;
-    }
     return self;
 }();
 
@@ -108,9 +77,6 @@ var NIGIRI_SALMON = function(){
     self.color = "yellow";
     self.symbol = "2";
     self.isNigiri = true;
-    self.value = function(hand, pickNum){
-        return 2;
-    }
     return self;
 }();
 
@@ -121,9 +87,6 @@ var NIGIRI_EGG = function(){
     self.color = "yellow";
     self.symbol = "1";
     self.isNigiri = true;
-    self.value = function(hand, pickNum){
-        return 1;
-    }
     return self;
 }();
 
@@ -133,26 +96,6 @@ var WASABI = function(){
     self.id = "wasabi";
     self.color = "yellow";
     self.symbol = "W";
-    self.value = function(hand, pickNum){
-        var nextNigiriScore = 0;
-        var futureWasabi = 0;
-        var rest = getRest(hand, pickNum + 1);
-        for (var i = 0; i < rest.length; i++){
-            var next = rest[i];
-            if (next.id == self.id){
-                // found another wasabi, skip the next nigiri
-                futureWasabi += 1;
-            } else if (next.isNigiri) {
-                if (futureWasabi > 0){
-                    futureWasabi -= 1;
-                } else {
-                    nextNigiriScore = next.value(hand);
-                    break;
-                }
-            }
-        }
-        return 2 * nextNigiriScore;
-    }
     return self;
 }();
 
@@ -162,9 +105,6 @@ var CHOPSTICKS = function(){
     self.id = "chopsticks";
     self.color = "lightblue";
     self.symbol = "C";
-    self.value = function(hand, pickNum){
-        return 0;
-    }
     return self;
 }();
 
@@ -174,29 +114,6 @@ var genMAKI = function(makiScore, makiCount){
     self.id = "maki-" + makiScore;
     self.isMaki = true;
     self.makiScore = makiScore;
-    self.makiTotal = function(hand, pickNum){
-        var rest = getRest(hand, pickNum);
-        var count = getCount(rest, function(toCheck){ return toCheck.isMaki; });
-        if (count != 1){
-            // last maki decides value
-            return 0;
-        }
-        var total = 0;
-        hand.forEach(function (card){
-            if (card.isMaki){
-                total += card.makiScore;
-            }
-        });
-        return total;
-    }
-    self.value = function(hand, pickNum){
-        var total = self.makiTotal(hand, pickNum);
-        if (total == 0){
-            return 0;
-        }
-        // todo check other hands
-        return 6;
-    }
     return self;
 }
 var MAKI_3 = genMAKI(3, 8);
