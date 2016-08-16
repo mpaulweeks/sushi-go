@@ -22,3 +22,13 @@ function removeCard(arr, toRemove){
     });
     return out;
 }
+
+function exceptIndex(arr, index){
+    var out = [];
+    for (var i = 0; i < arr.length; i++){
+        if (i != index){
+            out.push(arr[i]);
+        }
+    }
+    return out;
+}

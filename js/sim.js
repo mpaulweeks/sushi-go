@@ -11,7 +11,8 @@ function simHand(){
 }
 
 function runSim(){
-    for (var i = 0; i < 10; i++){
-        simHand();
-    }
+    // for (var i = 0; i < 10; i++){
+    //     simHand();
+    // }
+    game();
 }
