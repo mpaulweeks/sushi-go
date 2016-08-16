@@ -1,9 +1,16 @@
 
-function genPlayer(prefFunc){
+function genPlayer(prefFunc, id){
     var self = {};
     self.hand = null;
-    self.scores = [];
-    self.puddingCount = 0;
+    self.id = id;
+    self.scores = null;
+    self.puddingCount = null;
+
+    self.restart = function(){
+        self.scores = [];
+        self.puddingCount = 0;
+        self.newHand();
+    }
 
     function otherHands(otherPlayers){
         var otherHands = [];
@@ -25,7 +32,6 @@ function genPlayer(prefFunc){
     self.endRound = function(otherPlayers){
         self.scores.push(self.hand.calculateScore(otherHands(otherPlayers)));
         self.puddingCount += self.hand.tally[PUDDING.id];
-        self.newHand();
     };
 
     self.endGame = function(otherPlayers){
@@ -61,5 +67,6 @@ function genPlayer(prefFunc){
         return sum;
     };
 
+    self.restart();
     return self;
 }

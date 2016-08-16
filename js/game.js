@@ -13,9 +13,9 @@ function runRound(players){
         p.forEach(function (card){
             ids.push(card.id);
         });
-        println("pack: " + ids.join(", "));
+        // println("pack: " + ids.join(", "));
     });
-    println("---")
+    // println("---")
 
     while (packs[0].length > 0){
         var updatedPacks = [];
@@ -46,6 +46,6 @@ function runGame(players){
         var player = players[i];
         var others = exceptIndex(players, i);
         player.endGame(others);
-        println(player.getScore());
+        // println(player.getScore());
     }
 }

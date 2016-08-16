@@ -1,19 +1,18 @@
 
-function simHand(){
-    var pack = getDeck().draw(7);
-    var hand = genHand();
-    while (pack.length > 0){
-        var preferences = myPreferences(hand.tally, pack, []);
-        pack = hand.applyPreferences(pack, preferences);
-        println(hand.toString());
-    }
-    println(hand.score([]));
-}
-
 function runSim(){
     var players = [];
-    for (var i = 0; i < 4; i++){
-        players.push(genPlayer(myPreferences));
+    for (var i = 0; i < 2; i++){
+        players.push(genPlayer(myPreferences, "myPref"));
+        players.push(genPlayer(randomPreferences, "random"));
     }
-    runGame(players);
+    var scoreTotal = {};
+    for (var i = 0; i < 500; i++){
+        // println("running game #" + i);
+        runGame(players);
+        players.forEach(function (player){
+            scoreTotal[player.id] = player.getScore() + (scoreTotal[player.id] || 0);
+            player.restart();
+        });
+    }
+    println(scoreTotal);
 }
