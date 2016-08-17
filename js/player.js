@@ -11,9 +11,6 @@ function genPlayer(prefFunc, id){
     self.chooseCallback = null;
     self.choosePack = null;
 
-    // workaround
-    self.gameCallback = null;
-
     self.restart = function(){
         self.scores = [];
         self.puddingCount = 0;

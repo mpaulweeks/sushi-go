@@ -1,4 +1,8 @@
 
+function endGame(){
+    // todo
+}
+
 function playGame(){
     var players = [];
     players.push(genPlayer(null, "human"));

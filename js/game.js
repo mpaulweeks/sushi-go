@@ -6,22 +6,30 @@ var PLAYER_HAND_SIZE = {
     5: 7
 };
 
-function finishDraft(players, packs){
+function genGameData(players, callback){
+    return {
+        players: players,
+        callback: callback
+    };
+}
+
+function finishDraft(gameData, packs){
     if (packs[0].length > 0){
-        runDraft(players, packs);
+        runDraft(gameData, packs);
     } else {
-        finishRound(players);
+        finishRound(gameData);
     }
 }
 
-function draftCallbackFactory(players, packs, packIndex){
+function draftCallbackFactory(gameData, packs, packIndex){
     return function(newPack){
         packs[packIndex] = newPack;
-        finishDraft(players, packs);
+        finishDraft(gameData, packs);
     }
 }
 
-function runDraft(players, packs){
+function runDraft(gameData, packs){
+    var players = gameData.players;
     var updatedPacks = [];
     var setCallback = false;
     for (var i = 0; i < players.length; i++){
@@ -31,7 +39,7 @@ function runDraft(players, packs){
         var updatedPackIndex = (i + 1) % packs.length;
         if (player.isHuman){
             setCallback = true;
-            player.chooseCallback = draftCallbackFactory(players, updatedPacks, updatedPackIndex);
+            player.chooseCallback = draftCallbackFactory(gameData, updatedPacks, updatedPackIndex);
             player.choosePack = pack;
             drawPlayers(players, pack);
         } else {
@@ -40,11 +48,12 @@ function runDraft(players, packs){
         }
     }
     if (!setCallback){
-        finishDraft(players, updatedPacks);
+        finishDraft(gameData, updatedPacks);
     }
 }
 
-function finishRound(players){
+function finishRound(gameData){
+    var players = gameData.players;
     for (var i = 0; i < players.length; i++){
         var player = players[i];
         var others = exceptIndex(players, i);
@@ -54,13 +63,14 @@ function finishRound(players){
     }
     var roundsSeen = players[0].scores.length;
     if (roundsSeen < 3){
-        runRound(players);
+        runRound(gameData);
     } else {
-        endGame(players);
+        endGame(gameData);
     }
 }
 
-function runRound(players){
+function runRound(gameData){
+    var players = gameData.players;
     var deck = getDeck();
     var packs = [];
     players.forEach(function (player){
@@ -78,19 +88,20 @@ function runRound(players){
     });
     // println("---")
 
-    runDraft(players, packs);
+    runDraft(gameData, packs);
 }
 
-function endGame(players){
+function endGame(gameData){
+    var players = gameData.players;
     for (var i = 0; i < players.length; i++){
         var player = players[i];
         var others = exceptIndex(players, i);
         player.endGame(others);
         // println(player.getScore());
     }
-    players[0].gameCallback(players);
+    gameData.callback();
 }
 
-function runGame(players){
-    runRound(players);
+function runGame(players, callback){
+    runRound(genGameData(players, callback));
 }

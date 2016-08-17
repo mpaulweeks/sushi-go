@@ -15,7 +15,7 @@ function printResults(players, scoreTotal){
 
 function gameCallbackFactory(players, scoreTotal, gameLock){
     var runs = 100;
-    return function(){
+    var callback = function(){
         scoreTotal.games += 1;
         players.forEach(function (player){
             scoreTotal[player.id] = (scoreTotal[player.id] || []).concat(player.getScore());
@@ -23,20 +23,20 @@ function gameCallbackFactory(players, scoreTotal, gameLock){
         });
         runs -= 1;
         if (runs > 0){
-            runGame(players);
+            runGame(players, callback);
         } else {
             printResults(players, scoreTotal);
             gameLock.resolve();
         }
     }
+    return callback;
 }
 
 function startCallbackStack(players, scoreTotal){
     scoreTotal = scoreTotal || { games: 0 };
     var gameLock = new $.Deferred();
     var callback = gameCallbackFactory(players, scoreTotal, gameLock);
-    players[0].gameCallback = callback;
-    runGame(players);
+    runGame(players, callback);
     $.when(gameLock).then(function (){
         if (scoreTotal.games < 10000){
             setTimeout(function (){
