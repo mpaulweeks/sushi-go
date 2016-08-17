@@ -38,8 +38,11 @@
 </div>
 <script type="text/javascript">
     $(document).ready(function () {
-        // playGame();
-        runSim();
+        if (readUrlParam("sim")){
+            runSim();
+        } else {
+            playGame();
+        }
     });
 </script>
 </body>
