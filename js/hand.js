@@ -60,7 +60,7 @@ function genHand(cards, tally){
             }
         });
         var makiMultiplier = 3 * (2 - greaterMakis.size);
-        if (makiMultiplier < 0){
+        if (makiMultiplier < 0 || self.tally.makiTotal == 0){
             makiMultiplier = 0;
         }
         sum += parseInt(makiMultiplier / tiedMakis);
