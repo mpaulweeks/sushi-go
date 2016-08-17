@@ -7,19 +7,25 @@ function runSim(){
     players.push(genPlayer(lowRiskPreferences, "lowRisk"));
     players.push(genPlayer(randomPreferences, "random"));
     var scoreTotal = {};
-    for (var i = 0; i < 500; i++){
-        // println("running game #" + i);
-        runGame(players);
+    var runs = 500;
+    var gameCallback = function(players){
         players.forEach(function (player){
             scoreTotal[player.id] = (scoreTotal[player.id] || []).concat(player.getScore());
             player.restart();
         });
+        runs -= 1;
+        if (runs > 0){
+            runGame(players);
+        } else {
+            Object.keys(scoreTotal).forEach(function (key){
+                var avg = 0.0;
+                scoreTotal[key].forEach(function (score){
+                    avg += score;
+                });
+                println(key + " | " + (avg / scoreTotal[key].length));
+            });
+        }
     }
-    Object.keys(scoreTotal).forEach(function (key){
-        var avg = 0.0;
-        scoreTotal[key].forEach(function (score){
-            avg += score;
-        });
-        println(key + " | " + (avg / scoreTotal[key].length));
-    });
+    players[0].gameCallback = gameCallback;
+    runGame(players);
 }

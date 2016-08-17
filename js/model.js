@@ -136,6 +136,13 @@ var CardTypes = [
     MAKI_2,
     MAKI_3
 ];
+var CardLookup = {};
+CardTypes.forEach(function (cardType){
+    CardLookup[cardType.id] = cardType;
+});
+function getCardById(cardId){
+    return CardLookup[cardId];
+}
 
 var getDeck = function(){
     var deckList = [];
@@ -160,7 +167,7 @@ var getDeck = function(){
 
 var cardHtml = function(card){
     return formatStr(
-        '<div class="card card-{1}">{2}</div>',
-        card.color, card.symbol
+        '<div class="card card-{3}" data-card="{1}">{2}</div>',
+        card.id, card.symbol, card.color
     )
 }

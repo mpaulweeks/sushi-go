@@ -1,10 +1,18 @@
 
 function genPlayer(prefFunc, id){
     var self = {};
+    self.isHuman = !Boolean(prefFunc);
     self.hand = null;
     self.id = id;
     self.scores = null;
     self.puddingCount = null;
+
+    // temp
+    self.chooseCallback = null;
+    self.choosePack = null;
+
+    // workaround
+    self.gameCallback = null;
 
     self.restart = function(){
         self.scores = [];
@@ -24,6 +32,19 @@ function genPlayer(prefFunc, id){
         var pref = prefFunc(self.hand.tally, pack, otherHands(otherPlayers));
         return self.hand.applyPreferences(pack, pref);
     };
+
+    self.chooseCard = function(cardId){
+        if (!self.isHuman || !self.chooseCallback || !self.choosePack){
+            console.log(self.isHuman, self.chooseCallback, self.choosePack);
+            throw "bad player state"
+        }
+        var card = getCardById(cardId);
+        var pack = self.hand.applyPreferences(self.choosePack, [card]);
+        var callback = self.chooseCallback;
+        self.chooseCallback = null;
+        self.choosePack = null;
+        callback(pack);
+    }
 
     self.newHand = function(){
         self.hand = genHand();

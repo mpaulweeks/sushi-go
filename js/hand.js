@@ -103,9 +103,5 @@ function genHand(cards, tally){
         return removeCard(pack, packChoice);
     };
 
-    self.createViewModel = function(){
-        // todo
-    };
-
     return self;
 }
