@@ -3,17 +3,37 @@ body {
     font-family: "Cambria", Helvetica, Arial, sans-serif;
 }
 
-.score {
+.info {
     font-size: 30px;
+}
+
+.board {
+    height: 50px;
+}
+
+.draft {
+    height: 50px;
+}
+
+.clear {
+    float: none;
 }
 
 .card {
     float: left;
+    font-weight: bold;
     width: 50px;
     height: 50px;
     font-size: 24px;
-    font-style: bold;
-    line-height: 50px;
+    line-height: 40px;
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    border-radius: 10px;
+    border: 5px white solid;
+}
+
+.draft .card {
+    cursor: pointer;
 }
 
 .card-yellow {

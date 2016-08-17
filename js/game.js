@@ -32,11 +32,11 @@ function runRound(players, draw){
             var others = exceptIndex(players, i);
             var packIndex = (i + 1) % packs.length;
             var pack = packs[packIndex];
+            if (draw){
+                drawPlayer(player, others, pack, i);
+            }
             var updatedPack = player.draft(pack, others);
             updatedPacks.push(updatedPack);
-            if (draw){
-                drawPlayer(player, others, i);
-            }
         }
         packs = updatedPacks;
     }

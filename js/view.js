@@ -1,13 +1,15 @@
 
-var DRAW_ORDER = ['yellow', 'red', 'green', 'purple', 'blue', 'pink', 'teal'];
+var DRAW_ORDER = ['yellow', 'red', 'blue', 'green', 'purple', 'pink', 'teal'];
+var CLEAR_HTML = '<div class="clear"></div>';
+var PLAYER_HTML = `
+<div class="info">{2} - <span class="score" id="player-score-{1}"></span></div>
+<div class="board" id="player-board-{1}"></div>
+<div class="draft" id="player-draft-{1}"></div>
+`;
 
-function drawPlayer(player, otherPlayers, position){
-    if (position != 0){
-        // todo
-        return;
-    }
+function genBoardHtml(cards){
     var divs = {};
-    player.hand.cards.forEach(function (card){
+    cards.forEach(function (card){
         var cardDiv = cardHtml(card);
         divs[card.color] = (divs[card.color] || []).concat(cardDiv);
     });
@@ -18,8 +20,25 @@ function drawPlayer(player, otherPlayers, position){
             colorHtmls.push(colorHtml);
         }
     });
-    var boardHtml = colorHtmls.join("");
+    return colorHtmls.join("") + CLEAR_HTML;
+}
+
+function drawGame(players){
+    var numPlayers = players.length;
+    var gameHtml = [];
+    for (var i = numPlayers - 1; i >= 0; i--){
+        gameHtml.push(formatStr(PLAYER_HTML, i, players[i].id));
+    }
+    $("#game").html(gameHtml.join(""));
+}
+
+function drawPlayer(player, otherPlayers, pack, position){
     var score = player.calculateScore(otherPlayers);
+    var boardHtml = genBoardHtml(player.hand.cards);
+    var draftHtml = genBoardHtml(pack);
     $('#player-score-' + position).html(score);
     $('#player-board-' + position).html(boardHtml);
+    if (position == 0){
+        $('#player-draft-' + position).html(draftHtml);
+    }
 }
