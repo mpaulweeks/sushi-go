@@ -35,10 +35,10 @@ function drawGame(players){
 function drawPlayer(player, otherPlayers, pack, position){
     var score = player.calculateScore(otherPlayers);
     var boardHtml = genBoardHtml(player.hand.cards);
-    var draftHtml = genBoardHtml(pack);
     $('#player-score-' + position).html(score);
     $('#player-board-' + position).html(boardHtml);
     if (position == 0){
+        var draftHtml = genBoardHtml(pack);
         $('#player-draft-' + position).html(draftHtml);
     }
 }

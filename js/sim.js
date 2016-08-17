@@ -4,6 +4,7 @@ function runSim(){
     players.push(genPlayer(myPreferences, "myPref"));
     players.push(genPlayer(makiPreferences, "maki"));
     players.push(genPlayer(simplePreferences, "simple"));
+    players.push(genPlayer(lowRiskPreferences, "lowRisk"));
     players.push(genPlayer(randomPreferences, "random"));
     var scoreTotal = {};
     for (var i = 0; i < 500; i++){

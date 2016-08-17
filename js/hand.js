@@ -96,8 +96,8 @@ function genHand(cards, tally){
             }
         }
         if (packChoice == null){
-            println('card not covered by preferences: ' + card.id);
             packChoice = pack[0];
+            println('card not covered by preferences: ' + packChoice.id);
         }
         self.draft(packChoice);
         return removeCard(pack, packChoice);

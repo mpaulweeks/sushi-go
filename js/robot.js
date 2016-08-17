@@ -59,6 +59,40 @@ function myPreferences(tally, pack, hands){
     return pref;
 }
 
+function lowRiskPreferences(tally, pack, hands){
+    var remainingPicks = pack.length - 1;
+    var pref = [];
+    if (tally[SASHIMI.id] % 3 == 2){
+        pref.push(SASHIMI);
+    }
+    if (tally.pendingWasabi > 0){
+        pref.push(NIGIRI_SQUID);
+        pref.push(NIGIRI_SALMON);
+    }
+    if (tally[TEMPURA.id] % 2 == 1){
+        pref.push(TEMPURA);
+    }
+    if (tally.pendingWasabi == 0 && remainingPicks >= 5){
+        pref.push(WASABI);
+    }
+    pref.push(NIGIRI_SQUID);
+    pref.push(DUMPLING);
+    pref.push(NIGIRI_SALMON);
+    if (tally.makiTotal < 6) {
+        pref.push(MAKI_3);
+    }
+    pref.push(NIGIRI_EGG);
+    pref.push(PUDDING);
+    pref.push(TEMPURA);
+    pref.push(MAKI_3);
+    pref.push(MAKI_2);
+    pref.push(SASHIMI);
+    pref.push(MAKI_1);
+    pref.push(WASABI);
+    pref.push(CHOPSTICKS);
+    return pref;
+}
+
 function simplePreferences(tally, pack, hands){
     var pref = [];
     pref.push(WASABI);
