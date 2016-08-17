@@ -10,6 +10,13 @@ function shuffle(arr){
     return out;
 }
 
+function formatStr(str) {
+    var args = arguments;
+    return str.replace(/{(\d+)}/g, function(match, number) {
+        return typeof args[number] != 'undefined' ? args[number] : match;
+    });
+}
+
 function removeCard(arr, toRemove){
     var out = [];
     var found = false;

@@ -29,8 +29,12 @@ function genPlayer(prefFunc, id){
         self.hand = genHand();
     };
 
+    self.calculateScore = function(otherPlayers){
+        return self.hand.calculateScore(otherHands(otherPlayers));
+    }
+
     self.endRound = function(otherPlayers){
-        self.scores.push(self.hand.calculateScore(otherHands(otherPlayers)));
+        self.scores.push(self.calculateScore(otherPlayers));
         self.puddingCount += self.hand.tally[PUDDING.id];
     };
 

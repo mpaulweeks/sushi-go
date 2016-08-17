@@ -2,3 +2,45 @@ body {
     background-color: #eeeeee;
     font-family: "Cambria", Helvetica, Arial, sans-serif;
 }
+
+.score {
+    font-size: 30px;
+}
+
+.card {
+    float: left;
+    width: 50px;
+    height: 50px;
+    font-size: 24px;
+    font-style: bold;
+    line-height: 50px;
+}
+
+.card-yellow {
+    color: black;
+    background-color: yellow;
+}
+.card-green {
+    color: black;
+    background-color: lightgreen;
+}
+.card-purple {
+    color: white;
+    background-color: purple;
+}
+.card-blue {
+    color: white;
+    background-color: blue;
+}
+.card-teal {
+    color: black;
+    background-color: lightblue;
+}
+.card-red {
+    color: white;
+    background-color: red;
+}
+.card-pink {
+    color: black;
+    background-color: pink;
+}

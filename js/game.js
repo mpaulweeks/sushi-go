@@ -6,7 +6,8 @@ var PLAYER_HAND_SIZE = {
     5: 7
 };
 
-function runRound(players){
+function runRound(players, draw){
+    draw = draw || false;
     var deck = getDeck();
     var packs = [];
     players.forEach(function (player){
@@ -33,6 +34,9 @@ function runRound(players){
             var pack = packs[packIndex];
             var updatedPack = player.draft(pack, others);
             updatedPacks.push(updatedPack);
+            if (draw){
+                drawPlayer(player, others, i);
+            }
         }
         packs = updatedPacks;
     }
@@ -45,9 +49,9 @@ function runRound(players){
     }
 }
 
-function runGame(players){
+function runGame(players, draw){
     for (var i = 0; i < 3; i++){
-        runRound(players);
+        runRound(players, draw);
     }
     for (var i = 0; i < players.length; i++){
         var player = players[i];

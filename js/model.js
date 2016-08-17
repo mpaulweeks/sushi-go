@@ -103,7 +103,7 @@ var CHOPSTICKS = function(){
     var self = {};
     self.quantity = 4;
     self.id = "chopsticks";
-    self.color = "lightblue";
+    self.color = "teal";
     self.symbol = "C";
     return self;
 }();
@@ -112,6 +112,8 @@ var genMAKI = function(makiScore, makiCount){
     var self = {};
     self.quantity = makiCount;
     self.id = "maki-" + makiScore;
+    self.color = "red";
+    self.symbol = makiScore;
     self.isMaki = true;
     self.makiScore = makiScore;
     return self;
@@ -154,4 +156,11 @@ var getDeck = function(){
         return out;
     }
     return deckObj;
+}
+
+var cardHtml = function(card){
+    return formatStr(
+        '<div class="card card-{1}">{2}</div>',
+        card.color, card.symbol
+    )
 }
