@@ -28,9 +28,10 @@ function startPlay(players){
 function playGame(){
     var players = [];
     players.push(genPlayer(null, "human"));
-    players.push(genPlayer(lowRiskPreferences, "ai3"));
-    players.push(genPlayer(myPreferences, "ai2"));
-    players.push(genPlayer(simplePreferences, "ai1"));
+    players.push(genPlayer(lowRiskPreferences, "ai4"));
+    players.push(genPlayer(myPreferences, "ai3"));
+    players.push(genPlayer(lowRiskPreferences, "ai2"));
+    players.push(genPlayer(myPreferences, "ai1"));
     $('#reset').click(function (){
         resetPlay(players);
     });

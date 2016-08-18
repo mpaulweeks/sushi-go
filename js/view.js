@@ -58,6 +58,8 @@ function drawPlayer(player, otherPlayers, pack, position){
     if (player.isHuman){
         score = " - " + player.calculateScore(otherPlayers);
     }
+    var puddingCount = player.getCurrentPudding();
+    score += " | " + puddingCount + " pudding";
     $('#player-score-' + position).html(score);
     var boardHtml = genBoardHtml(player.hand.cards);
     $('#player-board-' + position).html(boardHtml);

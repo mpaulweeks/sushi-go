@@ -19,6 +19,10 @@ function genPlayer(prefFunc, id){
         self.newHand();
     }
 
+    self.getCurrentPudding = function(){
+        return self.puddingCount + self.hand.tally[PUDDING.id];
+    }
+
     function otherHands(otherPlayers){
         var otherHands = [];
         otherPlayers.forEach(function (otherPlayer){
