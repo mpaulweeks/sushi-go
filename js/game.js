@@ -39,6 +39,7 @@ function runDraft(gameData, packs){
         var updatedPackIndex = (i + 1) % packs.length;
         if (player.isHuman){
             setCallback = true;
+            player.otherPlayers = others;
             player.chooseCallback = draftCallbackFactory(gameData, updatedPacks, updatedPackIndex);
             player.choosePack = pack;
             drawPlayers(players, pack);

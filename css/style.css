@@ -50,6 +50,9 @@ hr {
 .draft .card {
     cursor: pointer;
 }
+#player-board-0 .card-teal{
+    cursor: pointer;
+}
 
 .card-yellow {
     color: black;

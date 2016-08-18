@@ -8,8 +8,10 @@ function genPlayer(prefFunc, id){
     self.puddingCount = null;
 
     // temp
+    self.otherPlayers = null;
     self.chooseCallback = null;
     self.choosePack = null;
+    self.pendingChopsticks = 0;
 
     self.restart = function(){
         self.scores = [];
@@ -30,6 +32,17 @@ function genPlayer(prefFunc, id){
         return self.hand.applyPreferences(pack, pref);
     };
 
+    self.chopsticks = function(){
+        if (self.hand.tally[CHOPSTICKS.id] == 0){
+            throw "trying to pop chopsticks when you dont have any"
+        }
+        self.pendingChopsticks += 1;
+        self.hand.tally[CHOPSTICKS.id] -= 1;
+        self.hand.cards = removeCard(self.hand.cards, CHOPSTICKS);
+        self.choosePack.push(CHOPSTICKS);
+        drawPlayer(self, self.otherPlayers, self.choosePack, 0);
+    };
+
     self.chooseCard = function(cardId){
         if (!self.isHuman || !self.chooseCallback || !self.choosePack){
             console.log(self.isHuman, self.chooseCallback, self.choosePack);
@@ -37,10 +50,17 @@ function genPlayer(prefFunc, id){
         }
         var card = getCardById(cardId);
         var pack = self.hand.applyPreferences(self.choosePack, [card]);
-        var callback = self.chooseCallback;
-        self.chooseCallback = null;
-        self.choosePack = null;
-        callback(pack);
+        if (self.pendingChopsticks == 0){
+            var callback = self.chooseCallback;
+            self.otherPlayers = null;
+            self.chooseCallback = null;
+            self.choosePack = null;
+            callback(pack);
+        } else {
+            self.pendingChopsticks -= 1;
+            self.choosePack = pack;
+            drawPlayer(self, self.otherPlayers, self.choosePack, 0);
+        }
     }
 
     self.newHand = function(){

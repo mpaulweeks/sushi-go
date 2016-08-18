@@ -1,14 +1,14 @@
 
 var DRAW_ORDER = ['yellow', 'red', 'blue', 'green', 'purple', 'pink', 'teal'];
 var CLEAR_HTML = '<div class="clear"></div>';
-var PLAYER_WRAPPER = '<div class="player-row">{1}</div>';
+var PLAYER_WRAPPER = '<div class="player-row" data-player="{2}">{1}</div>';
 var PLAYER_HTML = `
 <div class="info">{2}<span class="score" id="player-score-{1}"></span></div>
 <div class="board" id="player-board-{1}"></div>
 `;
 var DRAFT_HTML = `
 <hr/>
-<div class="draft" id="player-draft-{1}" data-player="{1}"></div>
+<div class="draft" id="player-draft-{1}"></div>
 `;
 
 function genBoardHtml(cards){
@@ -30,8 +30,12 @@ function genBoardHtml(cards){
 function setupListeners(players){
     $('.draft').on('click', '.card', function (){
         var cardId = $(this).data('card');
-        var playerId = parseInt($(this).parent().data('player'));
+        var playerId = parseInt($(this).parent().parent().data('player'));
         players[playerId].chooseCard(cardId);
+    });
+    $('#player-board-0').on('click', '.card-teal', function (){
+        var playerId = parseInt($(this).parent().parent().data('player'));
+        players[playerId].chopsticks();
     });
 }
 
@@ -43,7 +47,7 @@ function drawGame(players){
         if (players[i].isHuman){
             rowHtml += formatStr(DRAFT_HTML, i);
         }
-        rowHtmls.push(formatStr(PLAYER_WRAPPER, rowHtml));
+        rowHtmls.push(formatStr(PLAYER_WRAPPER, rowHtml, i));
     }
     $("#game").html(rowHtmls.join(""));
     setupListeners(players);
