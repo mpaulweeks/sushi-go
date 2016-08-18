@@ -3,6 +3,20 @@ body {
     font-family: "Cambria", Helvetica, Arial, sans-serif;
 }
 
+hr {
+    margin-top: 0px;
+    margin-bottom: 0px;
+    border-top-color: grey;
+}
+
+.player-row {
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    border-radius: 10px;
+    border: 5px grey solid;
+    width: 500px;
+}
+
 .info {
     font-size: 30px;
 }

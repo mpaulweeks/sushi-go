@@ -4,6 +4,9 @@ var CLEAR_HTML = '<div class="clear"></div>';
 var PLAYER_HTML = `
 <div class="info">{2} - <span class="score" id="player-score-{1}"></span></div>
 <div class="board" id="player-board-{1}"></div>
+`;
+var DRAFT_HTML = `
+<hr/>
 <div class="draft" id="player-draft-{1}" data-player="{1}"></div>
 `;
 
@@ -33,11 +36,15 @@ function setupListeners(players){
 
 function drawGame(players){
     var numPlayers = players.length;
-    var gameHtml = [];
+    var rowHtmls = [];
     for (var i = numPlayers - 1; i >= 0; i--){
-        gameHtml.push(formatStr(PLAYER_HTML, i, players[i].id));
+        var rowHtml = formatStr(PLAYER_HTML, i, players[i].id);
+        if (players[i].isHuman){
+            rowHtml += formatStr(DRAFT_HTML, i);
+        }
+        rowHtmls.push(formatStr('<div class="player-row">{1}</div>', rowHtml));
     }
-    $("#game").html(gameHtml.join(""));
+    $("#game").html(rowHtmls.join(""));
     setupListeners(players);
 }
 
