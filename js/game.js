@@ -1,4 +1,7 @@
 
+var GAME = function(){
+var module = {};
+
 var PLAYER_HAND_SIZE = {
     2: 10,
     3: 9,
@@ -42,7 +45,7 @@ function runDraft(gameData, packs){
             player.otherPlayers = others;
             player.chooseCallback = draftCallbackFactory(gameData, updatedPacks, updatedPackIndex);
             player.choosePack = pack;
-            drawPlayers(players, pack);
+            VIEW.drawPlayers(players, pack);
         } else {
             var updatedPack = player.draft(pack, others);
             updatedPacks[updatedPackIndex] = updatedPack;
@@ -106,3 +109,7 @@ function endGame(gameData){
 function runGame(players, callback){
     runRound(genGameData(players, callback));
 }
+
+module.start = runGame;
+return module;
+}();

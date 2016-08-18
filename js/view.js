@@ -1,4 +1,7 @@
 
+var VIEW = function(){
+var module = {};
+
 var DRAW_ORDER = ['yellow', 'red', 'blue', 'green', 'purple', 'pink', 'teal'];
 var CLEAR_HTML = '<div class="clear"></div>';
 var PLAYER_WRAPPER = `
@@ -93,3 +96,9 @@ function drawPlayers(players, pack){
         drawPlayer(player, others, pack, i);
     }
 }
+
+module.drawGame = drawGame;
+module.drawPlayers = drawPlayers;
+module.drawPlayer = drawPlayer;
+return module;
+}();

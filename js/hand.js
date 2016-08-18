@@ -1,4 +1,7 @@
 
+var HAND = function(){
+var module = {};
+
 function genHand(cards, tally){
     var self = {};
     self.cards = cards || [];
@@ -18,10 +21,6 @@ function genHand(cards, tally){
         });
         return out.join(", ");
     }
-
-    self.clone = function(){
-        return genHand(self.cards, self.tally);
-    };
 
     self.calculateScore = function(otherHands){
         var sum = 0;
@@ -105,3 +104,7 @@ function genHand(cards, tally){
 
     return self;
 }
+
+module.new = genHand;
+return module;
+}();

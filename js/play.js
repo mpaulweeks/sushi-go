@@ -1,6 +1,9 @@
 
+var PLAY = function(){
+var module = {};
+
 function endPlay(players){
-    drawPlayers(players);
+    VIEW.drawPlayers(players);
     $('#reset').show();
 }
 
@@ -14,21 +17,25 @@ function resetPlay(players){
 }
 
 function startPlay(players){
-    runGame(players, function(){
+    GAME.start(players, function(){
         endPlay(players);
     });
 }
 
 function playGame(){
     var players = [];
-    players.push(genPlayer(null, "human"));
-    players.push(genPlayer(lowRiskPreferences, "ai4"));
-    players.push(genPlayer(myPreferences, "ai3"));
-    players.push(genPlayer(lowRiskPreferences, "ai2"));
-    players.push(genPlayer(myPreferences, "ai1"));
+    players.push(PLAYER.new(null, "human"));
+    players.push(PLAYER.new(lowRiskPreferences, "ai4"));
+    players.push(PLAYER.new(myPreferences, "ai3"));
+    players.push(PLAYER.new(lowRiskPreferences, "ai2"));
+    players.push(PLAYER.new(myPreferences, "ai1"));
     $('#reset').click(function (){
         resetPlay(players);
     });
-    drawGame(players);
+    VIEW.drawGame(players);
     startPlay(players);
 }
+
+module.start = playGame;
+return module;
+}();

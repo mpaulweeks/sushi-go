@@ -2,7 +2,7 @@
 
 <html>
     <head>
-        <title>sushigo</title>
+        <title>sushi-go</title>
 
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta name="viewport" content="width=400">
@@ -25,7 +25,7 @@
 <div class="container text-center">
 <div class="">
 <h1 >
-    sushigo sim
+    sushi-go sim
 </h1>
 <div id="sim"></div>
 <div id="out"></div>
@@ -42,9 +42,9 @@
     $(document).ready(function () {
         $('#reset').hide();
         if (readUrlParam("sim")){
-            runSim();
+            SIM.start();
         } else {
-            playGame();
+            PLAY.start();
         }
     });
 </script>

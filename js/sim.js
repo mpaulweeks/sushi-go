@@ -1,4 +1,7 @@
 
+var SIM = function(){
+var module = {};
+
 function printResults(players, scoreTotal){
     var html = [];
     html.push(scoreTotal.games + " games");
@@ -23,7 +26,7 @@ function gameCallbackFactory(players, scoreTotal, gameLock){
         });
         runs -= 1;
         if (runs > 0){
-            runGame(players, callback);
+            GAME.start(players, callback);
         } else {
             printResults(players, scoreTotal);
             gameLock.resolve();
@@ -36,7 +39,7 @@ function startCallbackStack(players, scoreTotal){
     scoreTotal = scoreTotal || { games: 0 };
     var gameLock = new $.Deferred();
     var callback = gameCallbackFactory(players, scoreTotal, gameLock);
-    runGame(players, callback);
+    GAME.start(players, callback);
     $.when(gameLock).then(function (){
         if (scoreTotal.games < 10000){
             setTimeout(function (){
@@ -48,10 +51,14 @@ function startCallbackStack(players, scoreTotal){
 
 function runSim(){
     var players = [];
-    players.push(genPlayer(myPreferences, "myPref"));
-    players.push(genPlayer(makiPreferences, "maki"));
-    players.push(genPlayer(simplePreferences, "simple"));
-    players.push(genPlayer(lowRiskPreferences, "lowRisk"));
-    players.push(genPlayer(randomPreferences, "random"));
+    players.push(PLAYER.new(myPreferences, "myPref"));
+    players.push(PLAYER.new(makiPreferences, "maki"));
+    players.push(PLAYER.new(simplePreferences, "simple"));
+    players.push(PLAYER.new(lowRiskPreferences, "lowRisk"));
+    players.push(PLAYER.new(randomPreferences, "random"));
     startCallbackStack(players);
 }
+
+module.start = runSim;
+return module;
+}();

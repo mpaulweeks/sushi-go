@@ -1,4 +1,7 @@
 
+var PLAYER = function(){
+var module = {};
+
 function genPlayer(prefFunc, id){
     var self = {};
     self.isHuman = !Boolean(prefFunc);
@@ -44,7 +47,7 @@ function genPlayer(prefFunc, id){
         self.hand.tally[CHOPSTICKS.id] -= 1;
         self.hand.cards = removeCard(self.hand.cards, CHOPSTICKS);
         self.choosePack.push(CHOPSTICKS);
-        drawPlayer(self, self.otherPlayers, self.choosePack, 0);
+        VIEW.drawPlayer(self, self.otherPlayers, self.choosePack, 0);
     };
 
     self.chooseCard = function(cardId){
@@ -63,12 +66,12 @@ function genPlayer(prefFunc, id){
         } else {
             self.pendingChopsticks -= 1;
             self.choosePack = pack;
-            drawPlayer(self, self.otherPlayers, self.choosePack, 0);
+            VIEW.drawPlayer(self, self.otherPlayers, self.choosePack, 0);
         }
     }
 
     self.newHand = function(){
-        self.hand = genHand();
+        self.hand = HAND.new();
     };
 
     self.calculateScore = function(otherPlayers){
@@ -116,3 +119,7 @@ function genPlayer(prefFunc, id){
     self.restart();
     return self;
 }
+
+module.new = genPlayer;
+return module;
+}();
