@@ -1,7 +1,14 @@
 
 var DRAW_ORDER = ['yellow', 'red', 'blue', 'green', 'purple', 'pink', 'teal'];
 var CLEAR_HTML = '<div class="clear"></div>';
-var PLAYER_WRAPPER = '<div class="player-row" data-player="{2}">{1}</div>';
+var PLAYER_WRAPPER = `
+<div class="player-row">
+<div class="player-info" id="player-info-{2}"></div>
+<div class="player-table" data-player="{2}">{1}</div>
+<div class="player-info" id="player-history-{2}"></div>
+<div class="clear"></div>
+</div>
+`;
 var PLAYER_HTML = `
 <div class="info">{2}<span class="score" id="player-score-{1}"></span></div>
 <div class="board" id="player-board-{1}"></div>
@@ -55,11 +62,8 @@ function drawGame(players){
 
 function drawPlayer(player, otherPlayers, pack, position){
     var score = "";
-    if (player.isHuman){
-        score = " - " + player.calculateScore(otherPlayers);
-    }
-    var puddingCount = player.getCurrentPudding();
-    score += " | " + puddingCount + " pudding";
+    score = " | " + player.calculateScore(otherPlayers);
+    var puddingCount = player.getCurrentPudding() + " pudding";
     $('#player-score-' + position).html(score);
     var boardHtml = genBoardHtml(player.hand.cards);
     $('#player-board-' + position).html(boardHtml);
@@ -67,9 +71,22 @@ function drawPlayer(player, otherPlayers, pack, position){
         var draftHtml = genBoardHtml(pack);
         $('#player-draft-' + position).html(draftHtml);
     }
+    var info = [puddingCount];
+    if (pack.length == 0){
+        info.push("Total: " + player.getScore());
+    }
+    $('#player-info-' + position).html(info.join('<br/>'));
+    var history = [];
+    for (var i = 0; i < player.scores.length; i++){
+        var line = formatStr("Round {1}: {2}", i+1, player.scores[i]);
+        line = line.replace("Round 4", "Pudding");
+        history.push(line);
+    }
+    $('#player-history-' + position).html(history.join('<br/>'));
 }
 
 function drawPlayers(players, pack){
+    pack = pack || [];
     for (var i = 0; i < players.length; i++){
         var player = players[i];
         var others = exceptIndex(players, i);

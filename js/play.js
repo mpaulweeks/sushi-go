@@ -1,11 +1,6 @@
 
 function endPlay(players){
-    $('#game').empty();
-    var results = [];
-    players.forEach(function (player){
-        results = [(player.id + "|" + player.getScore())].concat(results);
-    });
-    $('#results').html(results.join("<br/>"));
+    drawPlayers(players);
     $('#reset').show();
 }
 
@@ -19,7 +14,6 @@ function resetPlay(players){
 }
 
 function startPlay(players){
-    drawGame(players);
     runGame(players, function(){
         endPlay(players);
     });
@@ -35,5 +29,6 @@ function playGame(){
     $('#reset').click(function (){
         resetPlay(players);
     });
+    drawGame(players);
     startPlay(players);
 }
