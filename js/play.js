@@ -3,7 +3,7 @@ function endPlay(players){
     $('#game').empty();
     var results = [];
     players.forEach(function (player){
-        results.push(player.id + "|" + player.getScore());
+        results = [(player.id + "|" + player.getScore())].concat(results);
     });
     $('#results').html(results.join("<br/>"));
     $('#reset').show();
@@ -28,10 +28,9 @@ function startPlay(players){
 function playGame(){
     var players = [];
     players.push(genPlayer(null, "human"));
-    players.push(genPlayer(lowRiskPreferences, "lowRisk"));
-    players.push(genPlayer(makiPreferences, "maki"));
-    players.push(genPlayer(simplePreferences, "simple"));
-    players.push(genPlayer(randomPreferences, "random"));
+    players.push(genPlayer(lowRiskPreferences, "ai3"));
+    players.push(genPlayer(myPreferences, "ai2"));
+    players.push(genPlayer(simplePreferences, "ai1"));
     $('#reset').click(function (){
         resetPlay(players);
     });
