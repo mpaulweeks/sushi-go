@@ -1,8 +1,9 @@
 
 var DRAW_ORDER = ['yellow', 'red', 'blue', 'green', 'purple', 'pink', 'teal'];
 var CLEAR_HTML = '<div class="clear"></div>';
+var PLAYER_WRAPPER = '<div class="player-row">{1}</div>';
 var PLAYER_HTML = `
-<div class="info">{2} - <span class="score" id="player-score-{1}"></span></div>
+<div class="info">{2}<span class="score" id="player-score-{1}"></span></div>
 <div class="board" id="player-board-{1}"></div>
 `;
 var DRAFT_HTML = `
@@ -42,16 +43,19 @@ function drawGame(players){
         if (players[i].isHuman){
             rowHtml += formatStr(DRAFT_HTML, i);
         }
-        rowHtmls.push(formatStr('<div class="player-row">{1}</div>', rowHtml));
+        rowHtmls.push(formatStr(PLAYER_WRAPPER, rowHtml));
     }
     $("#game").html(rowHtmls.join(""));
     setupListeners(players);
 }
 
 function drawPlayer(player, otherPlayers, pack, position){
-    var score = player.calculateScore(otherPlayers);
-    var boardHtml = genBoardHtml(player.hand.cards);
+    var score = "";
+    if (player.isHuman){
+        score = " - " + player.calculateScore(otherPlayers);
+    }
     $('#player-score-' + position).html(score);
+    var boardHtml = genBoardHtml(player.hand.cards);
     $('#player-board-' + position).html(boardHtml);
     if (position == 0){
         var draftHtml = genBoardHtml(pack);
