@@ -9,9 +9,10 @@ var PLAYER_HAND_SIZE = {
     5: 7
 };
 
-function genGameData(players, callback){
+function genGameData(players, deck, callback){
     return {
         players: players,
+        deck: deck,
         callback: callback
     };
 }
@@ -75,11 +76,10 @@ function finishRound(gameData){
 
 function runRound(gameData){
     var players = gameData.players;
-    var deck = getDeck();
     var packs = [];
     players.forEach(function (player){
         player.newHand();
-        packs.push(deck.draw(PLAYER_HAND_SIZE[players.length]));
+        packs.push(gameData.deck.draw(PLAYER_HAND_SIZE[players.length]));
     });
 
     // print packs
@@ -107,7 +107,8 @@ function endGame(gameData){
 }
 
 function runGame(players, callback){
-    runRound(genGameData(players, callback));
+    var deck = DECK.new();
+    runRound(genGameData(players, deck, callback));
 }
 
 module.start = runGame;

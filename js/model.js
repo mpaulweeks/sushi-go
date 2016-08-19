@@ -1,30 +1,53 @@
 
-function getRest(hand, index){
-    var out = [];
-    for (var i = index; i < hand.length; i++){
-        out.push(hand[i]);
-    }
-    return out;
-}
+var DECK = function(){
+    var module = {};
 
-function checkIdFunc(queryId){
-    return function(toCheck){
-        return toCheck.id == queryId;
-    }
-}
-
-function getCount(hand, queryFunc){
-    var count = 0;
-    for (var i = 0; i < hand.length; i++){
-        if (queryFunc(hand[i])){
-            count += 1;
+    var getDeck = function(){
+        var deckList = [];
+        CardTypes.forEach(function (cardType){
+            for (var i = 0; i < cardType.quantity; i++){
+                deckList.push(cardType);
+            }
+        });
+        var deckObj = {};
+        deckObj._list = shuffle(deckList);
+        deckObj.draw = function(number){
+            number = number || 1;
+            var out = [];
+            while (number > 0){
+                out.push(deckObj._list.pop());
+                number -= 1;
+            }
+            return out;
         }
+        return deckObj;
     }
-    return count;
-}
+
+    module.new = getDeck;
+    return module;
+}();
+
+var CARD = function(){
+    var module = {};
+    var cardHtml = function(card){
+        return formatStr(
+            '<div class="card card-{3}" data-card="{1}">{2}</div>',
+            card.id, card.symbol, card.color
+        )
+    }
+
+    module.new = function(){
+        var cardObj = {};
+        cardObj.html = function(){
+            return cardHtml(cardObj);
+        };
+        return cardObj;
+    }
+    return module;
+}();
 
 var SASHIMI = function(){
-    var self = {};
+    var self = CARD.new();
     self.quantity = 14;
     self.id = "sashimi";
     self.color = "green";
@@ -33,7 +56,7 @@ var SASHIMI = function(){
 }();
 
 var TEMPURA = function(){
-    var self = {};
+    var self = CARD.new();
     self.quantity = 14;
     self.id = "tempura";
     self.color = "purple";
@@ -42,7 +65,7 @@ var TEMPURA = function(){
 }();
 
 var DUMPLING = function(){
-    var self = {};
+    var self = CARD.new();
     self.SCORES = [1, 3, 6, 10, 15];
     self.quantity = 14;
     self.id = "dumpling";
@@ -52,7 +75,7 @@ var DUMPLING = function(){
 }();
 
 var PUDDING = function(){
-    var self = {};
+    var self = CARD.new();
     self.quantity = 10;
     self.id = "pudding";
     self.color = "pink";
@@ -61,7 +84,7 @@ var PUDDING = function(){
 }();
 
 var NIGIRI_SQUID = function(){
-    var self = {};
+    var self = CARD.new();
     self.quantity = 5;
     self.id = "nigiri-squid";
     self.color = "yellow";
@@ -71,7 +94,7 @@ var NIGIRI_SQUID = function(){
 }();
 
 var NIGIRI_SALMON = function(){
-    var self = {};
+    var self = CARD.new();
     self.quantity = 10;
     self.id = "nigiri-salmon";
     self.color = "yellow";
@@ -81,7 +104,7 @@ var NIGIRI_SALMON = function(){
 }();
 
 var NIGIRI_EGG = function(){
-    var self = {};
+    var self = CARD.new();
     self.quantity = 5;
     self.id = "nigiri-egg";
     self.color = "yellow";
@@ -91,7 +114,7 @@ var NIGIRI_EGG = function(){
 }();
 
 var WASABI = function(){
-    var self = {};
+    var self = CARD.new();
     self.quantity = 6;
     self.id = "wasabi";
     self.color = "yellow";
@@ -100,7 +123,7 @@ var WASABI = function(){
 }();
 
 var CHOPSTICKS = function(){
-    var self = {};
+    var self = CARD.new();
     self.quantity = 4;
     self.id = "chopsticks";
     self.color = "teal";
@@ -109,7 +132,7 @@ var CHOPSTICKS = function(){
 }();
 
 var genMAKI = function(makiScore, makiCount){
-    var self = {};
+    var self = CARD.new();
     self.quantity = makiCount;
     self.id = "maki-" + makiScore;
     self.color = "red";
@@ -121,6 +144,7 @@ var genMAKI = function(makiScore, makiCount){
 var MAKI_3 = genMAKI(3, 8);
 var MAKI_2 = genMAKI(2, 12);
 var MAKI_1 = genMAKI(1, 6);
+
 
 var CardTypes = [
     SASHIMI,
@@ -142,32 +166,4 @@ CardTypes.forEach(function (cardType){
 });
 function getCardById(cardId){
     return CardLookup[cardId];
-}
-
-var getDeck = function(){
-    var deckList = [];
-    CardTypes.forEach(function (cardType){
-        for (var i = 0; i < cardType.quantity; i++){
-            deckList.push(cardType);
-        }
-    });
-    var deckObj = {};
-    deckObj._list = shuffle(deckList);
-    deckObj.draw = function(number){
-        number = number || 1;
-        var out = [];
-        while (number > 0){
-            out.push(deckObj._list.pop());
-            number -= 1;
-        }
-        return out;
-    }
-    return deckObj;
-}
-
-var cardHtml = function(card){
-    return formatStr(
-        '<div class="card card-{3}" data-card="{1}">{2}</div>',
-        card.id, card.symbol, card.color
-    )
 }

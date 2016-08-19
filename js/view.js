@@ -24,7 +24,7 @@ var DRAFT_HTML = `
 function genBoardHtml(cards){
     var divs = {};
     cards.forEach(function (card){
-        var cardDiv = cardHtml(card);
+        var cardDiv = card.html();
         divs[card.color] = (divs[card.color] || []).concat(cardDiv);
     });
     var colorHtmls = [];
