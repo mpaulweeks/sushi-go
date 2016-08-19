@@ -38,9 +38,19 @@ function genPlayer(prefFunc, id){
         self.hand.resolvePicks();
     }
 
-    self.draft = function(pack, otherPlayers){
-        var pref = prefFunc(self.hand.tally, pack, otherHands(otherPlayers));
-        return self.hand.applyPreferences(pack, pref);
+    self.robotDraft = function(pack, otherPlayers){
+        var pendingSticks = self.hand.tally[CHOPSTICKS.id];
+        var pendingChoices = 1 + pendingSticks;
+        while (pendingChoices > 0){
+            if (pendingSticks > 0){
+                pack = self.hand.popChopsticks(pack);
+                pendingSticks -= 1;
+            }
+            var pref = prefFunc(self.hand.simTally(), pack, otherHands(otherPlayers));
+            pack = self.hand.applyPreferences(pack, pref);
+            pendingChoices -= 1;
+        }
+        return pack;
     };
 
     self.chopsticks = function(){
@@ -48,9 +58,7 @@ function genPlayer(prefFunc, id){
             throw "trying to pop chopsticks when you dont have any"
         }
         self.pendingChopsticks += 1;
-        self.hand.tally[CHOPSTICKS.id] -= 1;
-        self.hand.cards = removeCard(self.hand.cards, CHOPSTICKS);
-        self.choosePack.push(CHOPSTICKS);
+        self.choosePack = self.hand.popChopsticks(self.choosePack);
         VIEW.drawPlayer(self, self.otherPlayers, self.choosePack, 0);
     };
 

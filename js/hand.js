@@ -70,20 +70,24 @@ function genHand(cards, tally){
         return sum;
     };
 
+    function updateTally(tally, card){
+        tally[card.id] += 1;
+        if (card.id == WASABI.id){
+            tally.pendingWasabi += 1;
+        }
+        if (card.isNigiri && self.tally.pendingWasabi > 0){
+            tally.pendingWasabi -= 1;
+            tally.wasabiTargets.push(card);
+        }
+        if (card.isMaki){
+            tally.makiTotal += card.makiScore;
+        }
+    }
+
     self.resolvePicks = function(){
         self.pendingPicks.forEach(function (card){
             self.cards.push(card);
-            self.tally[card.id] += 1;
-            if (card.id == WASABI.id){
-                self.tally.pendingWasabi += 1;
-            }
-            if (card.isNigiri && self.tally.pendingWasabi > 0){
-                self.tally.pendingWasabi -= 1;
-                self.tally.wasabiTargets.push(card);
-            }
-            if (card.isMaki){
-                self.tally.makiTotal += card.makiScore;
-            }
+            updateTally(self.tally, card);
         });
         self.pendingPicks = [];
     };
@@ -107,6 +111,20 @@ function genHand(cards, tally){
         self.pendingPicks.push(packChoice);
         return removeCard(pack, packChoice);
     };
+
+    self.simTally = function(){
+        var futureTally = T.clone(self.tally);
+        self.pendingPicks.forEach(function (card){
+            updateTally(futureTally, card);
+        });
+        return futureTally;
+    }
+
+    self.popChopsticks = function(pack){
+        self.tally[CHOPSTICKS.id] -= 1;
+        self.cards = removeCard(self.cards, CHOPSTICKS);
+        return pack.concat(CHOPSTICKS);
+    }
 
     return self;
 }

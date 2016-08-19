@@ -44,7 +44,7 @@ function startCallbackStack(players, scoreTotal){
         if (scoreTotal.games < 10000){
             setTimeout(function (){
                 startCallbackStack(players, scoreTotal);
-            }, 10);
+            }, 1);
         }
     });
 }

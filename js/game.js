@@ -51,7 +51,7 @@ function runDraft(gameData, packs){
             player.choosePack = pack;
             VIEW.drawPlayers(players, pack);
         } else {
-            var updatedPack = player.draft(pack, others);
+            var updatedPack = player.robotDraft(pack, others);
             updatedPacks[updatedPackIndex] = updatedPack;
         }
     }

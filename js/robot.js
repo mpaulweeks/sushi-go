@@ -41,6 +41,9 @@ function myPreferences(tally, pack, hands){
     if (tally.pendingWasabi > 0){
         pref.push(NIGIRI_EGG);
     }
+    if (remainingPicks >= 2 + tally[CHOPSTICKS.id]){
+        pref.push(CHOPSTICKS);
+    }
 
     // else
     pref.push(NIGIRI_SALMON);
@@ -102,11 +105,11 @@ function simplePreferences(tally, pack, hands){
     pref.push(DUMPLING);
     pref.push(NIGIRI_SALMON);
     pref.push(MAKI_3);
+    pref.push(CHOPSTICKS);
     pref.push(MAKI_2);
     pref.push(MAKI_1);
     pref.push(NIGIRI_EGG);
     pref.push(PUDDING);
-    pref.push(CHOPSTICKS);
     return pref;
 }
 

@@ -1,4 +1,28 @@
 
+var T = function(){
+var module = {};
+
+module.clone = function(obj){
+    // todo make more general/robust
+    var newObj = {};
+    for (var key in obj){
+        if (obj.hasOwnProperty(key)){
+            var newVal = obj[key];
+            if (
+                (Array.isArray && Array.isArray(newVal)) ||
+                (newVal instanceof Array)
+            ){
+                newVal = newVal.concat();
+            }
+            newObj[key] = newVal;
+        }
+    }
+    return newObj;
+}
+
+return module;
+}();
+
 function readUrlParam(param_name, as_list){
     as_list = as_list || false;
     var vars = {};
