@@ -59,7 +59,7 @@ function genPlayer(prefFunc, id){
             console.log(self.isHuman, self.chooseCallback, self.choosePack);
             throw "bad player state"
         }
-        var card = getCardById(cardId);
+        var card = CARD.get(cardId);
         var pack = self.hand.applyPreferences(self.choosePack, [card]);
         if (self.pendingChopsticks == 0){
             var callback = self.chooseCallback;

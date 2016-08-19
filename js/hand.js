@@ -10,7 +10,7 @@ function genHand(cards, tally){
         pendingWasabi: 0,
         makiTotal: 0
     };
-    CardTypes.forEach(function (cardType){
+    CARD.TYPES.forEach(function (cardType){
         self.tally[cardType.id] = self.tally[cardType.id] || 0;
     });
 

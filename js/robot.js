@@ -128,5 +128,5 @@ function makiPreferences(tally, pack, hands){
 }
 
 function randomPreferences(tally, pack, hands){
-    return shuffle(CardTypes);
+    return shuffle(CARD.TYPES);
 }

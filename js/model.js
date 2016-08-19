@@ -4,7 +4,7 @@ var DECK = function(){
 
     var getDeck = function(){
         var deckList = [];
-        CardTypes.forEach(function (cardType){
+        CARD.TYPES.forEach(function (cardType){
             for (var i = 0; i < cardType.quantity; i++){
                 deckList.push(cardType);
             }
@@ -35,14 +35,26 @@ var CARD = function(){
             card.id, card.symbol, card.color
         )
     }
+    var registry = [];
 
+    module.get = function(cardId){
+        for (var i = 0; i < registry.length; i++){
+            var card = registry[i];
+            if (card.id == cardId){
+                return card;
+            }
+        }
+        throw "card not found"
+    }
     module.new = function(){
         var cardObj = {};
         cardObj.html = function(){
             return cardHtml(cardObj);
         };
+        registry.push(cardObj);
         return cardObj;
     }
+    module.TYPES = registry;
     return module;
 }();
 
@@ -144,26 +156,3 @@ var genMAKI = function(makiScore, makiCount){
 var MAKI_3 = genMAKI(3, 8);
 var MAKI_2 = genMAKI(2, 12);
 var MAKI_1 = genMAKI(1, 6);
-
-
-var CardTypes = [
-    SASHIMI,
-    TEMPURA,
-    DUMPLING,
-    PUDDING,
-    NIGIRI_SQUID,
-    NIGIRI_SALMON,
-    NIGIRI_EGG,
-    WASABI,
-    CHOPSTICKS,
-    MAKI_1,
-    MAKI_2,
-    MAKI_3
-];
-var CardLookup = {};
-CardTypes.forEach(function (cardType){
-    CardLookup[cardType.id] = cardType;
-});
-function getCardById(cardId){
-    return CardLookup[cardId];
-}
