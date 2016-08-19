@@ -14,6 +14,9 @@ function genHand(cards, tally){
         self.tally[cardType.id] = self.tally[cardType.id] || 0;
     });
 
+    // temp
+    self.pendingPicks = [];
+
     self.toString = function(){
         var out = [];
         self.cards.forEach(function (card){
@@ -67,19 +70,22 @@ function genHand(cards, tally){
         return sum;
     };
 
-    self.draft = function(card){
-        self.cards.push(card);
-        self.tally[card.id] += 1;
-        if (card.id == WASABI.id){
-            self.tally.pendingWasabi += 1;
-        }
-        if (card.isNigiri && self.tally.pendingWasabi > 0){
-            self.tally.pendingWasabi -= 1;
-            self.tally.wasabiTargets.push(card);
-        }
-        if (card.isMaki){
-            self.tally.makiTotal += card.makiScore;
-        }
+    self.resolvePicks = function(){
+        self.pendingPicks.forEach(function (card){
+            self.cards.push(card);
+            self.tally[card.id] += 1;
+            if (card.id == WASABI.id){
+                self.tally.pendingWasabi += 1;
+            }
+            if (card.isNigiri && self.tally.pendingWasabi > 0){
+                self.tally.pendingWasabi -= 1;
+                self.tally.wasabiTargets.push(card);
+            }
+            if (card.isMaki){
+                self.tally.makiTotal += card.makiScore;
+            }
+        });
+        self.pendingPicks = [];
     };
 
     self.applyPreferences = function(pack, preferences){
@@ -98,7 +104,7 @@ function genHand(cards, tally){
             packChoice = pack[0];
             println('card not covered by preferences: ' + packChoice.id);
         }
-        self.draft(packChoice);
+        self.pendingPicks.push(packChoice);
         return removeCard(pack, packChoice);
     };
 

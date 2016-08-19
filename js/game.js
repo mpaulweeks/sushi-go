@@ -18,6 +18,9 @@ function genGameData(players, deck, callback){
 }
 
 function finishDraft(gameData, packs){
+    gameData.players.forEach(function (player){
+        player.resolvePicks();
+    });
     if (packs[0].length > 0){
         runDraft(gameData, packs);
     } else {

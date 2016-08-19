@@ -34,6 +34,10 @@ function genPlayer(prefFunc, id){
         return otherHands;
     }
 
+    self.resolvePicks = function(){
+        self.hand.resolvePicks();
+    }
+
     self.draft = function(pack, otherPlayers){
         var pref = prefFunc(self.hand.tally, pack, otherHands(otherPlayers));
         return self.hand.applyPreferences(pack, pref);
