@@ -13,7 +13,7 @@ var PLAYER_WRAPPER = `
 </div>
 `;
 var PLAYER_HTML = `
-<div class="info">{2}<span class="score" id="player-score-{1}"></span></div>
+<div class="info">{2}</div>
 <div class="board" id="player-board-{1}"></div>
 `;
 var DRAFT_HTML = `
@@ -68,19 +68,18 @@ function drawGame(players){
 }
 
 function drawPlayer(player, otherPlayers, pack, position){
-    var score = "";
-    score = " | " + player.calculateScore(otherPlayers);
-    var puddingCount = player.getCurrentPudding() + " pudding";
-    $('#player-score-' + position).html(score);
+    var score = "Current Score: " + player.calculateScore(otherPlayers);
+    var puddingCount = player.puddingCount + " pudding";
     var boardHtml = genBoardHtml(player.hand.cards);
     $('#player-board-' + position).html(boardHtml);
     if (position == 0){
         var draftHtml = genBoardHtml(pack);
         $('#player-draft-' + position).html(draftHtml);
     }
-    var info = [puddingCount];
-    if (pack.length == 0){
-        info.push("Total: " + player.getScore());
+    var info = [score, puddingCount];
+    if (player.scores.length == 4){
+        var total = formatStr("<b>Total: {1}</b>", player.getScore());
+        info.push(total);
     }
     $('#player-info-' + position).html(info.join('<br/>'));
     var history = [];

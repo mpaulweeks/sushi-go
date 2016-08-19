@@ -11,7 +11,7 @@ hr {
 }
 
 .player-row {
-    width: 710px;
+    width: 750px;
     margin: 0 auto;
 }
 
@@ -30,7 +30,7 @@ hr {
     -moz-border-radius: 10px;
     border-radius: 10px;
     border: 5px lightgrey solid;
-    width: 100px;
+    width: 120px;
     height: 102px;
 }
 
