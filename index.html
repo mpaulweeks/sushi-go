@@ -36,12 +36,14 @@
 </div>
 
 <div id="results"></div>
-<button id="reset" class="btn">RESET</button>
+<button id="reset" class="btn">Reset</button>
+<button id="next-round" class="btn">Next Round</button>
 </div>
 </div>
 <script type="text/javascript">
     $(document).ready(function () {
         $('#reset').hide();
+        $('#next-round').hide();
         if (readUrlParam("sim")){
             SIM.start();
         } else {

@@ -15,6 +15,7 @@ function genPlayer(prefFunc, id){
     self.chooseCallback = null;
     self.choosePack = null;
     self.pendingChopsticks = 0;
+    self.roundCallback = null;
 
     self.restart = function(){
         self.scores = [];
@@ -81,6 +82,16 @@ function genPlayer(prefFunc, id){
             VIEW.drawPlayer(self, self.otherPlayers, self.choosePack, 0);
         }
     }
+
+    self.nextRound = function(){
+        if (!self.roundCallback){
+            throw "bad player state - end round"
+        }
+        $("#next-round").hide();
+        var callback = self.roundCallback;
+        self.roundCallback = null;
+        callback();
+    };
 
     self.newHand = function(){
         self.hand = HAND.new();

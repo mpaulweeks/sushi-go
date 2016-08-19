@@ -47,6 +47,10 @@ function setupListeners(players){
         var playerId = parseInt($(this).parent().parent().data('player'));
         players[playerId].chopsticks();
     });
+    $('#next-round').on('click', function (){
+        var playerId = 0;
+        players[playerId].nextRound();
+    });
 }
 
 function drawGame(players){
@@ -97,8 +101,14 @@ function drawPlayers(players, pack){
     }
 }
 
+function endRound(players){
+    drawPlayers(players);
+    $('#next-round').show();
+}
+
 module.drawGame = drawGame;
 module.drawPlayers = drawPlayers;
 module.drawPlayer = drawPlayer;
+module.endRound = endRound;
 return module;
 }();

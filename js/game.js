@@ -62,18 +62,32 @@ function runDraft(gameData, packs){
 
 function finishRound(gameData){
     var players = gameData.players;
+    var setCallback = false;
+    var shouldDraw = false;
+    var roundsSeen = players[0].scores.length + 1;
     for (var i = 0; i < players.length; i++){
         var player = players[i];
         var others = exceptIndex(players, i);
         player.endRound(others);
-        // println(player.hand.toString());
-        // println(player.hand.tally);
+        if (player.isHuman){
+            shouldDraw = true;
+            if (roundsSeen < 3){
+                setCallback = true;
+                player.roundCallback = function(){
+                    runRound(gameData);
+                };
+            }
+        }
     }
-    var roundsSeen = players[0].scores.length;
-    if (roundsSeen < 3){
-        runRound(gameData);
-    } else {
-        endGame(gameData);
+    if (shouldDraw){
+        VIEW.endRound(players);
+    }
+    if (!setCallback){
+        if (roundsSeen < 3){
+            runRound(gameData);
+        } else {
+            endGame(gameData);
+        }
     }
 }
 

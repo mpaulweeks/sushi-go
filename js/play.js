@@ -2,9 +2,10 @@
 var PLAY = function(){
 var module = {};
 
-function endPlay(players){
+function endGame(players){
     VIEW.drawPlayers(players);
     $('#reset').show();
+    $('#next-round').hide();
 }
 
 function resetPlay(players){
@@ -18,7 +19,7 @@ function resetPlay(players){
 
 function startPlay(players){
     GAME.start(players, function(){
-        endPlay(players);
+        endGame(players);
     });
 }
 
@@ -29,10 +30,10 @@ function playGame(){
     players.push(PLAYER.new(myPreferences, "ai3"));
     players.push(PLAYER.new(lowRiskPreferences, "ai2"));
     players.push(PLAYER.new(myPreferences, "ai1"));
-    $('#reset').click(function (){
+    VIEW.drawGame(players);
+    $('#reset').on('click', function (){
         resetPlay(players);
     });
-    VIEW.drawGame(players);
     startPlay(players);
 }
 
