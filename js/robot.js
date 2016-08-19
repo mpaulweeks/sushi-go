@@ -128,18 +128,5 @@ function makiPreferences(tally, pack, hands){
 }
 
 function randomPreferences(tally, pack, hands){
-    var pref = [];
-    pref.push(WASABI);
-    pref.push(NIGIRI_SQUID);
-    pref.push(NIGIRI_SALMON);
-    pref.push(NIGIRI_EGG);
-    pref.push(DUMPLING);
-    pref.push(MAKI_3);
-    pref.push(MAKI_2);
-    pref.push(MAKI_1);
-    pref.push(PUDDING);
-    pref.push(TEMPURA);
-    pref.push(SASHIMI);
-    pref.push(CHOPSTICKS);
-    return shuffle(pref);
+    return shuffle(CardTypes);
 }
