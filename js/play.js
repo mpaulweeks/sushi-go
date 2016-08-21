@@ -10,8 +10,6 @@ function resetPlay(players){
     players.forEach(function (player){
         player.restart();
     });
-    $('#results').empty();
-    $('#reset').hide();
     startPlay(players);
 }
 
@@ -28,8 +26,7 @@ function playGame(){
     players.push(PLAYER.new(myPreferences, "ai3"));
     players.push(PLAYER.new(lowRiskPreferences, "ai2"));
     players.push(PLAYER.new(myPreferences, "ai1"));
-    VIEW.drawGame(players);
-    $('#reset').on('click', function (){
+    VIEW.drawGame(players, function (){
         resetPlay(players);
     });
     startPlay(players);

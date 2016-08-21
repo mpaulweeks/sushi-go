@@ -69,6 +69,12 @@ hr {
     cursor: pointer;
 }
 
+.draft .btn {
+    float: right;
+    margin-top: 8px;
+    margin-right: 8px;
+}
+
 #player-board-0 .card-teal{
     cursor: pointer;
 }

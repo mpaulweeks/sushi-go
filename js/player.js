@@ -83,7 +83,6 @@ function genPlayer(prefFunc, id){
         if (!self.roundCallback){
             throw "bad player state - end round"
         }
-        $("#next-round").hide();
         var callback = self.roundCallback;
         self.roundCallback = null;
         callback();

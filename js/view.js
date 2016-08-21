@@ -20,6 +20,8 @@ var DRAFT_HTML = `
 <hr/>
 <div class="draft" id="player-draft-{1}"></div>
 `;
+var ROUND_BUTTON = '<button id="next-round" class="btn">Next Round</button>';
+var RESET_BUTTON = '<button id="reset" class="btn">Reset</button>';
 
 function genBoardHtml(cards){
     var divs = {};
@@ -37,7 +39,7 @@ function genBoardHtml(cards){
     return colorHtmls.join("") + CLEAR_HTML;
 }
 
-function setupListeners(players){
+function setupListeners(players, resetCallback){
     $('.draft').on('click', '.card', function (){
         var cardId = $(this).data('card');
         var playerId = parseInt($(this).parent().parent().data('player'));
@@ -47,13 +49,14 @@ function setupListeners(players){
         var playerId = parseInt($(this).parent().parent().data('player'));
         players[playerId].chopsticks();
     });
-    $('#next-round').on('click', function (){
+    $('#player-draft-0').on('click', '#next-round', function (){
         var playerId = 0;
         players[playerId].nextRound();
     });
+    $('#player-draft-0').on('click', '#reset', resetCallback);
 }
 
-function drawGame(players){
+function drawGame(players, resetCallback){
     var numPlayers = players.length;
     var rowHtmls = [];
     for (var i = numPlayers - 1; i >= 0; i--){
@@ -64,7 +67,7 @@ function drawGame(players){
         rowHtmls.push(formatStr(PLAYER_WRAPPER, rowHtml, i));
     }
     $("#game").html(rowHtmls.join(""));
-    setupListeners(players);
+    setupListeners(players, resetCallback);
 }
 
 function drawPlayer(player, otherPlayers, pack, position){
@@ -75,6 +78,12 @@ function drawPlayer(player, otherPlayers, pack, position){
     $('#player-board-' + position).html(boardHtml);
     if (position == 0){
         var draftHtml = genBoardHtml(pack);
+        if (pack.length == 0){
+            draftHtml = ROUND_BUTTON;
+            if (player.scores.length == 4){
+                draftHtml = RESET_BUTTON;
+            }
+        }
         $('#player-draft-' + position).html(draftHtml);
     }
     var info = [score, puddingCount];
@@ -122,14 +131,11 @@ function highlightWinner(players){
 function endRound(players){
     drawPlayers(players);
     highlightWinner(players);
-    $('#next-round').show();
 }
 
 function endGame(players){
     drawPlayers(players);
     highlightWinner(players);
-    $('#reset').show();
-    $('#next-round').hide();
 }
 
 module.drawGame = drawGame;
