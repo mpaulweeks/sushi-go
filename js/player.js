@@ -2,11 +2,11 @@
 var PLAYER = function(){
 var module = {};
 
-function genPlayer(prefFunc, id){
+function genPlayer(robot){
     var self = {};
-    self.isHuman = !Boolean(prefFunc);
+    self.isHuman = !Boolean(robot);
+    self.id = self.isHuman ? "Human" : robot.name;
     self.hand = null;
-    self.id = id;
     self.scores = null;
     self.puddingCount = null;
 
@@ -43,7 +43,7 @@ function genPlayer(prefFunc, id){
                 pack = self.hand.popChopsticks(pack);
                 pendingSticks -= 1;
             }
-            var pref = prefFunc(self.hand.simTally(), pack, otherHands(otherPlayers));
+            var pref = robot.prefFunc(self.hand.simTally(), pack, otherHands(otherPlayers));
             pack = self.hand.applyPreferences(pack, pref);
             pendingChoices -= 1;
         }

@@ -116,7 +116,7 @@ function endGame(gameData){
         var others = exceptIndex(players, i);
         player.endGame(others);
     }
-    gameData.callback();
+    gameData.callback(players);
 }
 
 function runGame(players, callback){

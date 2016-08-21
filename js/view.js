@@ -53,7 +53,9 @@ function setupListeners(players, resetCallback){
         var playerId = 0;
         players[playerId].nextRound();
     });
-    $('#player-draft-0').on('click', '#reset', resetCallback);
+    $('#player-draft-0').on('click', '#reset', function (){
+        resetCallback(players);
+    });
 }
 
 function drawGame(players, resetCallback){

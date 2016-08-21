@@ -2,23 +2,37 @@
 var SIM = function(){
 var module = {};
 
+function getSimRobots(numPlayers){
+    var robots = shuffle(ROBOT.registry);
+    var out = [];
+    for (var i = 0; i < numPlayers; i++){
+        out.push(PLAYER.new(robots[i]));
+    }
+    return out;
+}
+
 function printResults(players, scoreTotal){
     var html = [];
     html.push(scoreTotal.games + " games");
-    players.forEach(function (player){
-        var key = player.id;
+    ROBOT.registry.forEach(function (robot){
+        var key = robot.name;
         var avg = 0.0;
         scoreTotal[key].forEach(function (score){
             avg += score;
         });
-        html.push(key + " | " + (avg / scoreTotal[key].length).toFixed(2));
+        html.push(formatStr(
+            "{1} | {2} | {3}",
+            key,
+            (avg / scoreTotal[key].length).toFixed(2),
+            scoreTotal[key].length
+        ));
     });
     $('#sim').html(html.join("<br/>"));
 }
 
-function gameCallbackFactory(players, scoreTotal, gameLock){
+function gameCallbackFactory(scoreTotal, gameLock){
     var runs = 100;
-    var callback = function(){
+    var callback = function(players){
         scoreTotal.games += 1;
         players.forEach(function (player){
             scoreTotal[player.id] = (scoreTotal[player.id] || []).concat(player.getTotalScore());
@@ -26,7 +40,7 @@ function gameCallbackFactory(players, scoreTotal, gameLock){
         });
         runs -= 1;
         if (runs > 0){
-            GAME.start(players, callback);
+            GAME.start(getSimRobots(players.length), callback);
         } else {
             printResults(players, scoreTotal);
             gameLock.resolve();
@@ -35,28 +49,21 @@ function gameCallbackFactory(players, scoreTotal, gameLock){
     return callback;
 }
 
-function startCallbackStack(players, scoreTotal){
-    scoreTotal = scoreTotal || { games: 0 };
+function startCallbackStack(numPlayers, scoreTotal){
     var gameLock = new $.Deferred();
-    var callback = gameCallbackFactory(players, scoreTotal, gameLock);
-    GAME.start(players, callback);
+    var callback = gameCallbackFactory(scoreTotal, gameLock);
+    GAME.start(getSimRobots(numPlayers), callback);
     $.when(gameLock).then(function (){
         if (scoreTotal.games < 10000){
             setTimeout(function (){
-                startCallbackStack(players, scoreTotal);
+                startCallbackStack(numPlayers, scoreTotal);
             }, 1);
         }
     });
 }
 
-function runSim(){
-    var players = [];
-    players.push(PLAYER.new(myPreferences, "myPref"));
-    players.push(PLAYER.new(makiPreferences, "maki"));
-    players.push(PLAYER.new(simplePreferences, "simple"));
-    players.push(PLAYER.new(lowRiskPreferences, "lowRisk"));
-    players.push(PLAYER.new(randomPreferences, "random"));
-    startCallbackStack(players);
+function runSim(numPlayers){
+    startCallbackStack(numPlayers, { games: 0 });
 }
 
 module.start = runSim;

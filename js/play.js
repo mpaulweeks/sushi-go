@@ -10,28 +10,20 @@ function resetPlay(players){
     players.forEach(function (player){
         player.restart();
     });
-    startPlay(players);
+    startPlay(players.length);
 }
 
-function startPlay(players){
-    GAME.start(players, function(){
-        endGame(players);
-    });
-}
-
-function playGame(){
+function startPlay(numPlayers){
     var players = [];
-    players.push(PLAYER.new(null, "human"));
-    players.push(PLAYER.new(lowRiskPreferences, "ai4"));
-    players.push(PLAYER.new(myPreferences, "ai3"));
-    players.push(PLAYER.new(lowRiskPreferences, "ai2"));
-    players.push(PLAYER.new(myPreferences, "ai1"));
-    VIEW.drawGame(players, function (){
-        resetPlay(players);
-    });
-    startPlay(players);
+    players.push(PLAYER.new());
+    var robots = shuffle(ROBOT.registry);
+    for (var i = 0; i < numPlayers - 1; i++){
+        players.push(PLAYER.new(robots[i]));
+    }
+    VIEW.drawGame(players, resetPlay);
+    GAME.start(players, endGame);
 }
 
-module.start = playGame;
+module.start = startPlay;
 return module;
 }();

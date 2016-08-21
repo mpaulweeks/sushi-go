@@ -1,5 +1,19 @@
 
-function myPreferences(tally, pack, hands){
+var ROBOT = function(){
+var module = {};
+
+var registry = [];
+
+function genRobot(name, prefFunc){
+    var self = {};
+    self.name = name;
+    self.prefFunc = prefFunc;
+    self.isHuman = Boolean(prefFunc);
+    registry.push(self);
+    return self;
+}
+
+module.PaulBot = genRobot('PaulBot', function(tally, pack, hands){
     var remainingPicks = pack.length - 1;
     var pref = [];
 
@@ -60,9 +74,9 @@ function myPreferences(tally, pack, hands){
     pref.push(WASABI);
     pref.push(CHOPSTICKS);
     return pref;
-}
+});
 
-function lowRiskPreferences(tally, pack, hands){
+module.PrudentBot = genRobot('PrudentBot', function(tally, pack, hands){
     var remainingPicks = pack.length - 1;
     var pref = [];
     if (tally[SASHIMI.id] % 3 == 2){
@@ -94,42 +108,46 @@ function lowRiskPreferences(tally, pack, hands){
     pref.push(WASABI);
     pref.push(CHOPSTICKS);
     return pref;
-}
+});
 
-function simplePreferences(tally, pack, hands){
+module.SimpleBot = genRobot('SimpleBot', function(tally, pack, hands){
     var pref = [];
     pref.push(WASABI);
     pref.push(SASHIMI);
     pref.push(NIGIRI_SQUID);
     pref.push(TEMPURA);
-    pref.push(DUMPLING);
     pref.push(NIGIRI_SALMON);
     pref.push(MAKI_3);
+    pref.push(DUMPLING);
     pref.push(CHOPSTICKS);
     pref.push(MAKI_2);
     pref.push(MAKI_1);
     pref.push(NIGIRI_EGG);
     pref.push(PUDDING);
     return pref;
-}
+});
 
-function makiPreferences(tally, pack, hands){
+module.RiskyBot = genRobot('RiskyBot', function(tally, pack, hands){
     var pref = [];
-    pref.push(WASABI);
     pref.push(SASHIMI);
-    pref.push(NIGIRI_SQUID);
-    pref.push(MAKI_3);
     pref.push(TEMPURA);
     pref.push(DUMPLING);
-    pref.push(MAKI_2);
+    pref.push(CHOPSTICKS);
+    pref.push(NIGIRI_SQUID);
     pref.push(NIGIRI_SALMON);
-    pref.push(MAKI_1);
     pref.push(NIGIRI_EGG);
     pref.push(PUDDING);
-    pref.push(CHOPSTICKS);
+    pref.push(MAKI_3);
+    pref.push(MAKI_2);
+    pref.push(MAKI_1);
+    pref.push(WASABI);
     return pref;
-}
+});
 
-function randomPreferences(tally, pack, hands){
+module.RandomBot = genRobot('RandomBot', function(tally, pack, hands){
     return shuffle(CARD.TYPES);
-}
+});
+
+module.registry = registry;
+return module;
+}();

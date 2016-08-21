@@ -39,10 +39,17 @@
 </div>
 <script type="text/javascript">
     $(document).ready(function () {
+        var numPlayers = parseInt(readUrlParam("seats") || "4");
+        if (numPlayers < 2){
+            numPlayers = 2;
+        }
+        if (numPlayers > 5){
+            numPlayers = 5;
+        }
         if (readUrlParam("sim")){
-            SIM.start();
+            SIM.start(numPlayers);
         } else {
-            PLAY.start();
+            PLAY.start(numPlayers);
         }
     });
 </script>

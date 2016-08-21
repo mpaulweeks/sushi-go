@@ -52,9 +52,16 @@ function println(message){
 }
 
 function shuffle(arr){
-    var out = arr.concat();
-    out.sort(function (a,b) {return parseInt(Math.random()*2);})
-    return out;
+    // https://en.wikipedia.org/wiki/Fisher%E2%80%93Yates_shuffle#The_modern_algorithm
+    // http://stackoverflow.com/a/12646864/6461842
+    var array = arr.slice(0);
+    for (var i = array.length - 1; i > 0; i--) {
+        var j = Math.floor(Math.random() * (i + 1));
+        var temp = array[i];
+        array[i] = array[j];
+        array[j] = temp;
+    }
+    return array;
 }
 
 function formatStr(str) {
