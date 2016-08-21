@@ -127,7 +127,7 @@ function genPlayer(prefFunc, id){
         self.scores.push(puddingScore);
     };
 
-    self.getScore = function(){
+    self.getTotalScore = function(){
         var sum = 0;
         self.scores.forEach(function (roundScore){
             sum += roundScore;

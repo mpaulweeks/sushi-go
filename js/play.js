@@ -3,9 +3,7 @@ var PLAY = function(){
 var module = {};
 
 function endGame(players){
-    VIEW.drawPlayers(players);
-    $('#reset').show();
-    $('#next-round').hide();
+    VIEW.endGame(players);
 }
 
 function resetPlay(players){

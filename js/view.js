@@ -5,10 +5,10 @@ var module = {};
 var DRAW_ORDER = ['yellow', 'red', 'blue', 'green', 'purple', 'pink', 'teal'];
 var CLEAR_HTML = '<div class="clear"></div>';
 var PLAYER_WRAPPER = `
-<div class="player-row">
+<div class="player-row" id="player-row-{2}">
+<div class="player-info" id="player-history-{2}"></div>
 <div class="player-info" id="player-info-{2}"></div>
 <div class="player-table" data-player="{2}">{1}</div>
-<div class="player-info" id="player-history-{2}"></div>
 <div class="clear"></div>
 </div>
 `;
@@ -68,6 +68,7 @@ function drawGame(players){
 }
 
 function drawPlayer(player, otherPlayers, pack, position){
+    $('#player-row-' + position).removeClass('highlight');
     var score = "Current Score: " + player.calculateScore(otherPlayers);
     var puddingCount = player.puddingCount + " pudding";
     var boardHtml = genBoardHtml(player.hand.cards);
@@ -77,8 +78,8 @@ function drawPlayer(player, otherPlayers, pack, position){
         $('#player-draft-' + position).html(draftHtml);
     }
     var info = [score, puddingCount];
-    if (player.scores.length == 4){
-        var total = formatStr("<b>Total: {1}</b>", player.getScore());
+    if (pack.length == 0){
+        var total = formatStr("<br/><b>Total: {1}</b>", player.getTotalScore());
         info.push(total);
     }
     $('#player-info-' + position).html(info.join('<br/>'));
@@ -100,14 +101,41 @@ function drawPlayers(players, pack){
     }
 }
 
+function highlightWinner(players){
+    var maxId = 0;
+    for (var i = 1; i < players.length; i++){
+        var maxScore = players[maxId].getTotalScore();
+        var newScore = players[i].getTotalScore();
+        var winner = (
+            newScore > maxScore || (
+                newScore == maxScore &&
+                players[i].puddingCount > players[maxId].puddingCount
+            )
+        );
+        if (winner){
+            maxId = i;
+        }
+    }
+    $('#player-row-' + maxId).addClass('highlight');
+}
+
 function endRound(players){
     drawPlayers(players);
+    highlightWinner(players);
     $('#next-round').show();
+}
+
+function endGame(players){
+    drawPlayers(players);
+    highlightWinner(players);
+    $('#reset').show();
+    $('#next-round').hide();
 }
 
 module.drawGame = drawGame;
 module.drawPlayers = drawPlayers;
 module.drawPlayer = drawPlayer;
 module.endRound = endRound;
+module.endGame = endGame;
 return module;
 }();

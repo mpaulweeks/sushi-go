@@ -21,7 +21,7 @@ function gameCallbackFactory(players, scoreTotal, gameLock){
     var callback = function(){
         scoreTotal.games += 1;
         players.forEach(function (player){
-            scoreTotal[player.id] = (scoreTotal[player.id] || []).concat(player.getScore());
+            scoreTotal[player.id] = (scoreTotal[player.id] || []).concat(player.getTotalScore());
             player.restart();
         });
         runs -= 1;

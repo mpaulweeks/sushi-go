@@ -15,6 +15,10 @@ hr {
     margin: 0 auto;
 }
 
+.highlight .player-info {
+    background-color: white;
+}
+
 .player-table {
     float: left;
     -webkit-border-radius: 10px;
@@ -38,10 +42,7 @@ hr {
     font-size: 30px;
 }
 
-.board {
-    height: 50px;
-}
-
+.board,
 .draft {
     height: 50px;
 }
@@ -67,6 +68,7 @@ hr {
     float: right;
     cursor: pointer;
 }
+
 #player-board-0 .card-teal{
     cursor: pointer;
 }

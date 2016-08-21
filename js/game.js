@@ -99,15 +99,12 @@ function runRound(gameData){
         packs.push(gameData.deck.draw(PLAYER_HAND_SIZE[players.length]));
     });
 
-    // print packs
     packs.forEach(function (p){
         var ids = [];
         p.forEach(function (card){
             ids.push(card.id);
         });
-        // println("pack: " + ids.join(", "));
     });
-    // println("---")
 
     runDraft(gameData, packs);
 }
@@ -118,7 +115,6 @@ function endGame(gameData){
         var player = players[i];
         var others = exceptIndex(players, i);
         player.endGame(others);
-        // println(player.getScore());
     }
     gameData.callback();
 }
