@@ -20,8 +20,8 @@ var DRAFT_HTML = `
 <hr/>
 <div class="draft" id="player-draft-{1}"></div>
 `;
-var ROUND_BUTTON = '<button id="next-round" class="btn">Next Round</button>';
-var RESET_BUTTON = '<button id="reset" class="btn">Reset</button>';
+var ROUND_BUTTON = '<button id="next-round" class="btn btn-primary">Next Round</button>';
+var RESET_BUTTON = '<button id="reset" class="btn btn-primary">Reset</button>';
 
 function genBoardHtml(cards){
     var divs = {};
