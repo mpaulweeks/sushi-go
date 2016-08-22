@@ -47,7 +47,9 @@
             numPlayers = 5;
         }
         if (readUrlParam("sim")){
-            SIM.start(numPlayers);
+            Simulator().start(numPlayers);
+        } else if (readUrlParam("collect")){
+            Simulator([ROBOT.RandomBot], true).start(numPlayers);
         } else {
             PLAY.start(numPlayers);
         }
