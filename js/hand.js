@@ -10,6 +10,8 @@ function genHand(cards, tally){
         pendingWasabi: 0,
         makiTotal: 0
     };
+    self.history = [];
+
     CARD.TYPES.forEach(function (cardType){
         self.tally[cardType.id] = self.tally[cardType.id] || 0;
     });
@@ -92,6 +94,10 @@ function genHand(cards, tally){
         self.pendingPicks = [];
     };
 
+    function recordHistory(choice, remainingCards){
+        // todo
+    }
+
     self.applyPreferences = function(pack, preferences){
         var packOptions = new Set();
         pack.forEach(function (card){
@@ -109,7 +115,8 @@ function genHand(cards, tally){
             println('card not covered by preferences: ' + packChoice.id);
         }
         self.pendingPicks.push(packChoice);
-        return removeCard(pack, packChoice);
+        var newPack = removeCard(pack, packChoice);
+        recordHistory(packChoice, newPack);
     };
 
     self.simTally = function(){

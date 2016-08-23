@@ -20,6 +20,12 @@ module.clone = function(obj){
     return newObj;
 }
 
+module.sortById = function(cards){
+    return arr.slice(0).sort(function (item1, item2){
+        return item1.id.toLowerCase().localeCompare(item2.id.toLowerCase());
+    });
+};
+
 return module;
 }();
 
