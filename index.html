@@ -39,19 +39,13 @@
 </div>
 <script type="text/javascript">
     $(document).ready(function () {
-        var numPlayers = parseInt(readUrlParam("seats") || "4");
-        if (numPlayers < 2){
-            numPlayers = 2;
-        }
-        if (numPlayers > 5){
-            numPlayers = 5;
-        }
-        if (readUrlParam("sim")){
-            Simulator().start(numPlayers);
-        } else if (readUrlParam("collect")){
-            Simulator([ROBOT.RandomBot], true).start(numPlayers);
+        var params = T.getParams();
+        if (params.sim){
+            Simulator(params.runs).start(params.seats);
+        } else if (params.collect){
+            Simulator(params.runs, [ROBOT.RandomBot], true).start(params.seats);
         } else {
-            PLAY.start(numPlayers);
+            PLAY.start(params.seats);
         }
     });
 </script>

@@ -1,5 +1,5 @@
 
-var Simulator = function(playerPool, collectingData){
+var Simulator = function(maxIterations, playerPool, collectingData){
 playerPool = playerPool || ROBOT.registry;
 collectingData = collectingData || false;
 var scoreTotal = { games: 0 };
@@ -61,7 +61,7 @@ function startCallbackStack(numPlayers){
     var callback = gameCallbackFactory(gameLock);
     GAME.start(module.playerFunc(numPlayers), callback);
     $.when(gameLock).then(function (){
-        if (scoreTotal.games < 10000){
+        if (scoreTotal.games < maxIterations){
             setTimeout(function (){
                 startCallbackStack(numPlayers);
             }, 1);
