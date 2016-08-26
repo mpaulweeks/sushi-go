@@ -2,6 +2,52 @@
 var T = function(){
 var module = {};
 
+
+function readUrlParam(paramName, coerceInt, asList){
+    asList = asList || false;
+    var vars = {};
+    var q = document.URL.split('?')[1];
+    if(q != undefined){
+        q = q.split('&');
+        for(var i = 0; i < q.length; i++){
+            var param = q[i].split('=');
+            var name = param[0];
+            var value = param[1];
+            vars[name] = vars[name] || [];
+            vars[name].push(value);
+        }
+    }
+    if (vars.hasOwnProperty(paramName)){
+        var paramList = vars[paramName];
+        if (coerceInt){
+            for (var i = 0; i < paramList.length; i++){
+                paramList[i] = parseInt(paramList[i]);
+            }
+        }
+        if (paramList.length == 1 && !asList){
+            return paramList[0];
+        }
+        return paramList;
+    }
+    return null;
+}
+
+module.getParams = function(){
+    var seats = readUrlParam("seats", true) || 4;
+    if (seats < 2){
+        seats = 2;
+    }
+    if (seats > 5){
+        seats = 5;
+    }
+    return {
+        sim: Boolean(readUrlParam("sim")) || false,
+        collect: Boolean(readUrlParam("collect")) || false,
+        runs: readUrlParam("runs", true) || 10000,
+        seats: seats
+    };
+}
+
 module.clone = function(obj){
     // todo make more general/robust
     var newObj = {};
@@ -28,29 +74,6 @@ module.sortById = function(cards){
 
 return module;
 }();
-
-function readUrlParam(param_name, as_list){
-    as_list = as_list || false;
-    var vars = {};
-    var q = document.URL.split('?')[1];
-    if(q != undefined){
-        q = q.split('&');
-        for(var i = 0; i < q.length; i++){
-            var param = q[i].split('=');
-            var name = param[0];
-            var value = param[1];
-            vars[name] = vars[name] || [];
-            vars[name].push(value);
-        }
-    }
-    if (vars.hasOwnProperty(param_name)){
-        if (vars[param_name].length == 1 && !as_list){
-            return vars[param_name][0];
-        }
-        return vars[param_name];
-    }
-    return null;
-}
 
 function println(message){
     console.log(message);

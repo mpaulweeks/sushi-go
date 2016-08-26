@@ -43,7 +43,7 @@ function runDraft(gameData, packs){
         var player = players[i];
         var others = exceptIndex(players, i);
         var pack = packs[i];
-        var updatedPackIndex = (i + 1) % packs.length;
+        var updatedPackIndex = (i - 1 + packs.length) % packs.length;
         if (player.isHuman){
             setCallback = true;
             player.otherPlayers = others;
