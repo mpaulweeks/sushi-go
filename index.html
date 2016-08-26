@@ -12,6 +12,7 @@
         <script src="js/bootstrap.min.js"></script>
         <script src="js/tool.js"></script>
         <script src="js/card.js"></script>
+        <script src="js/history.js"></script>
         <script src="js/deck.js"></script>
         <script src="js/hand.js"></script>
         <script src="js/player.js"></script>
@@ -40,10 +41,10 @@
 <script type="text/javascript">
     $(document).ready(function () {
         var params = T.getParams();
-        if (params.sim){
-            Simulator(params.runs).start(params.seats);
-        } else if (params.collect){
+        if (params.sim && params.collect){
             Simulator(params.runs, [ROBOT.RandomBot], true).start(params.seats);
+        } else if (params.sim){
+            Simulator(params.runs).start(params.seats);
         } else {
             PLAY.start(params.seats);
         }

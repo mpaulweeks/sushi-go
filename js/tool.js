@@ -72,6 +72,14 @@ module.sortById = function(cards){
     });
 };
 
+module.average = function(arr){
+    var sum = 0;
+    arr.forEach(function (num){
+        sum += num;
+    });
+    return sum / arr.length;
+}
+
 return module;
 }();
 

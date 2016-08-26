@@ -217,6 +217,27 @@ module.RandomBot = genRobot('RandomBot', function(tally, pack, hands){
     return shuffle(CARD.TYPES);
 });
 
+if (HISTORYv1){
+    var data = HISTORYv1;
+    var prefAverage = CARD.TYPES.slice(0);
+    prefAverage.sort(function (item1, item2){
+        return data[item2.id].value - data[item1.id].value;
+    });
+    // println(prefAverage);
+    module.AverageBot = genRobot('AverageBot', function(tally, pack, hands){
+        return prefAverage;
+    });
+
+    var prefCompare = CARD.TYPES.slice(0);
+    prefCompare.sort(function (item1, item2){
+        return data[item2.id].comparisons[item1.id] - data[item1.id].comparisons[item2.id];
+    });
+    // println(prefCompare);
+    module.CompareBot = genRobot('CompareBot', function(tally, pack, hands){
+        return prefCompare;
+    });
+}
+
 module.registry = registry;
 return module;
 }();

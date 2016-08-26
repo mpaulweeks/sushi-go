@@ -65,6 +65,8 @@ function startCallbackStack(numPlayers){
             setTimeout(function (){
                 startCallbackStack(numPlayers);
             }, 1);
+        } else if(collectingData) {
+            HISTORY.print();
         }
     });
 }
@@ -73,12 +75,7 @@ function runSim(numPlayers){
     startCallbackStack(numPlayers);
 }
 
-function collectData(){
-
-}
-
 module.playerFunc = getSimRobots;
 module.start = runSim;
-module.collectData = collectData;
 return module;
 };

@@ -9,6 +9,7 @@ function genPlayer(robot){
     self.hand = null;
     self.scores = null;
     self.puddingCount = null;
+    self.history = null;
 
     // temp
     self.otherPlayers = null;
@@ -20,6 +21,7 @@ function genPlayer(robot){
     self.restart = function(){
         self.scores = [];
         self.puddingCount = 0;
+        self.history = [];
         self.newHand();
     }
 
@@ -99,6 +101,7 @@ function genPlayer(robot){
     self.endRound = function(otherPlayers){
         self.scores.push(self.calculateScore(otherPlayers));
         self.puddingCount += self.hand.tally[PUDDING.id];
+        self.history = self.history.concat(self.hand.history);
     };
 
     self.endGame = function(otherPlayers){
@@ -124,6 +127,9 @@ function genPlayer(robot){
         }
         var puddingScore = parseInt(pp / equalPudding);
         self.scores.push(puddingScore);
+        self.history.forEach(function (hist){
+            hist.addScore(self.getTotalScore());
+        });
     };
 
     self.getTotalScore = function(){

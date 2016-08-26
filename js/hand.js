@@ -95,7 +95,11 @@ function genHand(cards, tally){
     };
 
     function recordHistory(choice, remainingCards){
-        // todo
+        remainingCards.forEach(function (other){
+            if (choice.id != other.id){
+                self.history.push(HISTORY.new(choice, other, remainingCards.length + 1));
+            }
+        });
     }
 
     self.applyPreferences = function(pack, preferences){
@@ -117,6 +121,7 @@ function genHand(cards, tally){
         self.pendingPicks.push(packChoice);
         var newPack = removeCard(pack, packChoice);
         recordHistory(packChoice, newPack);
+        return newPack;
     };
 
     self.simTally = function(){
