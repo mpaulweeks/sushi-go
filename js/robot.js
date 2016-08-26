@@ -27,14 +27,14 @@ module.AdamBot = genRobot('AdamBot', function(tally, pack, hands){
     if (tally[DUMPLING.id] % 5 == 4){
         pref.push(DUMPLING);
     }
-    if (tally[SASHIMI.id] % 3 == 1 && remainingPicks >= 5){
+    if (tally[TEMPURA.id] % 2 == 1){
+        pref.push(TEMPURA);
+    }
+    if (tally[SASHIMI.id] % 3 == 1 && remainingPicks >= 6){
         pref.push(SASHIMI);
     }
     if (tally.pendingWasabi > 0){
         pref.push(NIGIRI_SALMON);
-    }
-    if (tally[TEMPURA.id] % 2 == 1){
-        pref.push(TEMPURA);
     }
     if (tally[DUMPLING.id] % 5 == 3){
         pref.push(DUMPLING);
@@ -42,7 +42,6 @@ module.AdamBot = genRobot('AdamBot', function(tally, pack, hands){
     if (tally[DUMPLING.id] % 5 == 2){
         pref.push(DUMPLING);
     }
-    pref.push(NIGIRI_SQUID);
     if (remainingPicks >= 5 && tally.pendingWasabi == 0){
         pref.push(WASABI);
     }
