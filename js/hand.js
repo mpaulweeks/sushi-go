@@ -32,14 +32,10 @@ function genHand(cards, tally){
         sum += 10 * parseInt(self.tally[SASHIMI.id] / 3);
         sum += 5 * parseInt(self.tally[TEMPURA.id] / 2);
         var dumplingCount = self.tally[DUMPLING.id];
-        while (dumplingCount > 0){
-            var thisGroup = dumplingCount;
-            if (thisGroup > 5){
-                thisGroup = 5;
-            }
-            sum += DUMPLING.SCORES[thisGroup - 1];
-            dumplingCount -= thisGroup;
+        if (dumplingCount > 5){
+            dumplingCount = 5;
         }
+        sum += DUMPLING.SCORES[dumplingCount];
         var nigiriTally = {};
         nigiriTally[NIGIRI_SQUID.id] = self.tally[NIGIRI_SQUID.id];
         nigiriTally[NIGIRI_SALMON.id] = self.tally[NIGIRI_SALMON.id];

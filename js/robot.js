@@ -93,7 +93,7 @@ module.PaulBot = genRobot('PaulBot', function(tally, pack, hands){
     if (tally.pendingWasabi > 0){
         pref.push(NIGIRI_SQUID);
     }
-    if (tally[DUMPLING.id] % 5 == 4){
+    if (tally[DUMPLING.id] == 4){
         pref.push(DUMPLING);
     }
     if (tally[SASHIMI.id] % 3 == 1 && remainingPicks >= 3){
@@ -105,10 +105,10 @@ module.PaulBot = genRobot('PaulBot', function(tally, pack, hands){
     if (tally[TEMPURA.id] % 2 == 1){
         pref.push(TEMPURA);
     }
-    if (tally[DUMPLING.id] % 5 == 3){
+    if (tally[DUMPLING.id] == 3){
         pref.push(DUMPLING);
     }
-    if (tally[DUMPLING.id] % 5 == 2){
+    if (tally[DUMPLING.id] == 2){
         pref.push(DUMPLING);
     }
     pref.push(NIGIRI_SQUID);
@@ -130,7 +130,9 @@ module.PaulBot = genRobot('PaulBot', function(tally, pack, hands){
 
     // else
     pref.push(NIGIRI_SALMON);
-    pref.push(DUMPLING);
+    if (tally[DUMPLING.id] < 5){
+        pref.push(DUMPLING);
+    }
     pref.push(MAKI_3);
     pref.push(MAKI_2);
     pref.push(PUDDING);
@@ -142,6 +144,7 @@ module.PaulBot = genRobot('PaulBot', function(tally, pack, hands){
     pref.push(SASHIMI);
     pref.push(WASABI);
     pref.push(CHOPSTICKS);
+    pref.push(DUMPLING);
     return pref;
 });
 
@@ -162,7 +165,9 @@ module.PrudentBot = genRobot('PrudentBot', function(tally, pack, hands){
         pref.push(WASABI);
     }
     pref.push(NIGIRI_SQUID);
-    pref.push(DUMPLING);
+    if (tally[DUMPLING.id] < 5){
+        pref.push(DUMPLING);
+    }
     pref.push(NIGIRI_SALMON);
     if (tally.makiTotal < 6) {
         pref.push(MAKI_3);
@@ -176,6 +181,7 @@ module.PrudentBot = genRobot('PrudentBot', function(tally, pack, hands){
     pref.push(MAKI_1);
     pref.push(WASABI);
     pref.push(CHOPSTICKS);
+    pref.push(DUMPLING);
     return pref;
 });
 

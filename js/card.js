@@ -50,7 +50,7 @@ var TEMPURA = function(){
 
 var DUMPLING = function(){
     var self = CARD.new();
-    self.SCORES = [1, 3, 6, 10, 15];
+    self.SCORES = [0, 1, 3, 6, 10, 15];
     self.quantity = 14;
     self.id = "dumpling";
     self.color = "blue";
