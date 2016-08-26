@@ -2,12 +2,16 @@
 var HISTORY = function(){
 var module = {};
 var data = {};
+var collectingData = T.getParams().collect;
 
 function createHistoryObj(parent){
     var self = {};
     self.parent = parent
     self.scores = [];
     self.addScore = function(score){
+        if (!collectingData){
+            return;
+        }
         self.parent.scores.push(score);
         self.scores.push(score);
     };
