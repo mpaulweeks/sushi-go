@@ -4,6 +4,7 @@ var module = {};
 
 var DRAW_ORDER = ['yellow', 'red', 'blue', 'green', 'purple', 'pink', 'teal'];
 var CLEAR_HTML = '<div class="clear"></div>';
+var LINK_TO_SIM = '<p><a href="?sim=1">simulate bots vs each other</a></p>';
 var PLAYER_WRAPPER = `
 <div class="player-row" id="player-row-{2}">
 <div class="player-info" id="player-history-{2}"></div>
@@ -60,7 +61,7 @@ function setupListeners(players, resetCallback){
 
 function drawGame(players, resetCallback){
     var numPlayers = players.length;
-    var rowHtmls = [];
+    var rowHtmls = [LINK_TO_SIM];
     for (var i = numPlayers - 1; i >= 0; i--){
         var rowHtml = formatStr(PLAYER_HTML, i, players[i].id);
         if (players[i].isHuman){

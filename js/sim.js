@@ -14,23 +14,43 @@ function getSimRobots(numPlayers){
     return out;
 }
 
+const simResult = `
+    <tr>
+        <td>{1}</td>
+        <td>{2}</td>
+        <td>{3}</td>
+    </tr>
+`;
+
 function printResults(){
-    var html = [];
-    html.push(scoreTotal.games + " games");
+    const tableRows = [];
     playerPool.forEach(function (robot){
         var key = robot.name;
         var avg = 0.0;
         scoreTotal[key].forEach(function (score){
             avg += score;
         });
-        html.push(formatStr(
-            "{1} | {2} | {3}",
-            key,
-            (avg / scoreTotal[key].length).toFixed(2),
-            scoreTotal[key].length
-        ));
+        tableRows.push(`
+            <tr>
+                <td>${key}</td>
+                <td>${(avg / scoreTotal[key].length).toFixed(2)}</td>
+                <td>${scoreTotal[key].length}</td>
+            </tr>
+        `);
     });
-    $('#sim').html(html.join("<br/>"));
+    $('#sim').html(`
+        <div>${scoreTotal.games} games</div>
+        <table class='sim-result'>
+            <thead>
+                <tr>
+                    <th>bot name</th>
+                    <th>avg score</th>
+                    <th>games played</th>
+                </tr>
+            </thead>
+            <tbody>${tableRows.join('')}</tbody>
+        </table>
+    `);
 }
 
 function recordResults(players){

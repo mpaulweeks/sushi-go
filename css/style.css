@@ -107,3 +107,12 @@ hr {
     color: black;
     background-color: pink;
 }
+
+.sim-result {
+    margin: 0px auto;
+}
+.sim-result th,
+.sim-result td {
+    text-align: center;
+    width: 100px;
+}
